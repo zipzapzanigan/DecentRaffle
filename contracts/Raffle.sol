@@ -10,6 +10,7 @@ contract Raffler {
     Counters.Counter private _ids;
 
     mapping(uint256 => Raffle) public raffles;
+    mapping(address => uint256[]) public accountRaffles;
 
     struct Raffle {
         uint256 id;
@@ -39,6 +40,7 @@ contract Raffler {
             msg.sender
         );
         raffles[raffle.id] = raffle;
+        accountRaffles[msg.sender].push(raffle.id);
     }
 
     function enter(uint256 _raffleId, uint256 entryCount) public payable {
