@@ -11,7 +11,7 @@ describe("Raffle", function () {
   });
 
   it("Creates a raffle", async function () {
-    const tx = await raffleContract.create(ethers.utils.parseEther(".5"));
+    const tx = await raffleContract.create(ethers.utils.parseEther(".5"), 5);
     await tx.wait();
     const raffle = await raffleContract.raffles(1);
     expect(raffle.id).to.equal(1);
@@ -33,12 +33,15 @@ describe("Raffle", function () {
   it("Pick Winner", async function () {
     let accountBalance = await address1.getBalance();
     console.log(ethers.utils.formatEther(accountBalance));
-    const randomNumber = Math.floor(Math.random() * 999999);
-    const tx = await raffleContract.pickWinner(1, randomNumber);
+    let randomNumbers = [];
+    for (let i = 0; i < 5; i++) {
+      randomNumbers.push(Math.floor(Math.random() * 99999));
+    }
+    const tx = await raffleContract.pickWinner(1, randomNumbers);
     await tx.wait();
     accountBalance = await address1.getBalance();
     console.log(ethers.utils.formatEther(accountBalance));
-    const raffle = await raffleContract.raffles(1);
-    console.log(raffle.winner);
+    const winners = await raffleContract.getWinners(1);
+    console.log(winners);
   });
 });

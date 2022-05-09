@@ -14,7 +14,8 @@ contract Raffler {
     struct Raffle {
         uint256 id;
         uint256 price;
-        address winner;
+        uint256 winnerCount;
+        address[] winners;
         address[] entries;
         bool open;
         uint256 balance;
@@ -25,12 +26,13 @@ contract Raffler {
         console.log("Deployed!");
     }
 
-    function create(uint256 _price) public {
+    function create(uint256 _price, uint16 _winnerCount) public {
         _ids.increment();
         Raffle memory raffle = Raffle(
             _ids.current(),
             _price,
-            address(0),
+            _winnerCount,
+            new address[](0),
             new address[](0),
             true,
             0,
@@ -53,12 +55,17 @@ contract Raffler {
         }
     }
 
-    function pickWinner(uint256 _raffleId, uint256 randomNumber) public {
+    function pickWinner(uint256 _raffleId, uint256[] calldata randomNumbers)
+        public
+    {
         Raffle storage raffle = raffles[_raffleId];
         require(raffle.open, "Raffle is closed");
         require(raffle.entries.length > 0, "No entries");
-        uint256 winnerIndex = randomNumber % raffle.entries.length;
-        raffle.winner = raffle.entries[winnerIndex];
+        for (uint256 i = 0; i < randomNumbers.length; i++) {
+            uint256 winnerIndex = randomNumbers[i] % raffle.entries.length;
+            raffle.winners.push(raffle.entries[winnerIndex]);
+            delete raffle.entries[winnerIndex];
+        }
         raffle.open = false;
         // Transfer balance to owner
         payable(raffle.owner).transfer(raffle.balance);
@@ -67,5 +74,21 @@ contract Raffler {
     function getEntriesLength(uint256 _raffleId) public view returns (uint256) {
         Raffle memory raffle = raffles[_raffleId];
         return raffle.entries.length;
+    }
+
+    function getEntries(uint256 _raffleId)
+        public
+        view
+        returns (address[] memory)
+    {
+        return raffles[_raffleId].entries;
+    }
+
+    function getWinners(uint256 _raffleId)
+        public
+        view
+        returns (address[] memory)
+    {
+        return raffles[_raffleId].winners;
     }
 }
