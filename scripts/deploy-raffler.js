@@ -14,6 +14,7 @@ async function main() {
   const Contract = await ethers.getContractFactory("Raffler");
   const sponsorWallet = await getSponsorWallet();
 
+  console.log("Deploying...");
   const contract = await Contract.deploy(
     AirnodeRrpAddresses[chainId],
     sponsorWallet
