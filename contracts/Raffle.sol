@@ -172,6 +172,19 @@ contract Raffler is RrpRequesterV0 {
         return raffles[_raffleId].winners;
     }
 
+    function isWinner(uint256 _raffleId, address _address)
+        public
+        view
+        returns (bool)
+    {
+        for (uint256 i = 0; i < raffles[_raffleId].winners.length; i++) {
+            if (raffles[_raffleId].winners[i] == _address) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function getAccountRaffles(address _account)
         public
         view
