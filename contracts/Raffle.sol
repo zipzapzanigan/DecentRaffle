@@ -43,11 +43,14 @@ contract Raffler is RrpRequesterV0 {
 
     struct Raffle {
         uint256 id;
+        string title;
         uint256 price;
         uint256 winnerCount;
         address[] winners;
         address[] entries;
         bool open;
+        uint256 startTime;
+        uint256 endTime;
         uint256 balance;
         address owner;
         bool airnodeSuccess;
@@ -66,16 +69,25 @@ contract Raffler is RrpRequesterV0 {
     /// @notice Create a new raffle
     /// @param _price The price to enter the raffle
     /// @param _winnerCount The number of winners to be selected
-    function create(uint256 _price, uint16 _winnerCount) public {
+    function create(
+        uint256 _price,
+        uint16 _winnerCount,
+        string memory _title,
+        uint256 _startTime,
+        uint256 _endTime
+    ) public {
         require(_winnerCount > 0, "Winner count must be greater than 0");
         _ids.increment();
         Raffle memory raffle = Raffle(
             _ids.current(),
+            _title,
             _price,
             _winnerCount,
             new address[](0),
             new address[](0),
             true,
+            _startTime,
+            _endTime,
             0,
             msg.sender,
             false
@@ -94,6 +106,11 @@ contract Raffler is RrpRequesterV0 {
         Raffle storage raffle = raffles[_raffleId];
         require(raffle.open, "Raffle is closed");
         require(entryCount >= 1, "Entry count must be at least 1");
+        require(
+            block.timestamp >= raffle.startTime &&
+                block.timestamp <= raffle.endTime,
+            "Raffle is closed"
+        );
         require(
             msg.value == raffle.price * entryCount,
             "Entry price does not match"
@@ -187,5 +204,26 @@ contract Raffler is RrpRequesterV0 {
         returns (address[] memory)
     {
         return raffles[_raffleId].winners;
+    }
+
+    function isWinner(uint256 _raffleId, address _address)
+        public
+        view
+        returns (bool)
+    {
+        for (uint256 i = 0; i < raffles[_raffleId].winners.length; i++) {
+            if (raffles[_raffleId].winners[i] == _address) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getAccountRaffles(address _account)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return accountRaffles[_account];
     }
 }
