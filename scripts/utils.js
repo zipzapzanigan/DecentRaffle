@@ -1,6 +1,7 @@
 const { deriveSponsorWalletAddress } = require("@api3/airnode-admin");
 const airnodeProtocol = require("@api3/airnode-protocol");
 require("dotenv").config();
+const hre = require("hardhat");
 
 async function getSponsorWallet() {
   const anuXpub =
@@ -14,8 +15,10 @@ async function getSponsorWallet() {
     anuAirnode,
     wallet.address
   );
+  console.log({ sponsorWalletAddress });
   return sponsorWalletAddress;
 }
+// getSponsorWallet();
 
 async function sponsorRequester(requesterAddress) {
   let { chainId } = await ethers.provider.getNetwork();
@@ -48,9 +51,23 @@ async function getRRPContract() {
   );
 }
 
+async function verifyContract() {
+  console.log("Verifying Contract...");
+
+  const { address } = require("../deployed-contract.json");
+  const rrp = await getRRPContract();
+  const sponsorWallet = await getSponsorWallet();
+  await hre.run("verify:verify", {
+    address,
+    constructorArguments: [rrp.address, sponsorWallet],
+  });
+  console.log("Verified!");
+}
+
 module.exports = {
   getSponsorWallet,
   sponsorRequester,
   getRaffleContract,
   getRRPContract,
+  verifyContract,
 };

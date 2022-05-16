@@ -3,8 +3,11 @@ require("dotenv").config();
 const privateKey = process.env.PRIVATE_KEY;
 const ropstenRPC = process.env.RPC_ROPSTEN;
 const rinkebyRPC = process.env.RPC_RINKEBY;
+const mumbaiRPC = process.env.RPC_MUMBAI;
+const etherscanKey = process.env.ETHERSCAN_KEY;
 
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -33,10 +36,17 @@ module.exports = {
       url: rinkebyRPC,
       accounts: [privateKey],
     },
+    matic: {
+      url: mumbaiRPC,
+      accounts: [privateKey],
+    },
     hardhat: {
       forking: {
         url: rinkebyRPC,
       },
     },
+  },
+  etherscan: {
+    apiKey: etherscanKey,
   },
 };

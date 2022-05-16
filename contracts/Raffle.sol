@@ -1,5 +1,15 @@
 // SPDX-License-Identifier: UNLICENSED
-
+/*
+   ___  ___ _  _  ___ 
+  / _ \| _ \ \| |/ __|
+ | (_) |   / .` | (_ |
+  \__\_\_|_\_|\_|\___|
+                      
+*/
+/// @title Raffle Contract as PoC for using QRNGs
+/// @notice This contract is not secure. Do not use it in production. Refer to
+/// the contract for more information.
+/// @dev See README.md for more information.
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -13,15 +23,22 @@ contract Raffler is RrpRequesterV0 {
 
     mapping(uint256 => Raffle) public raffles;
     mapping(address => uint256[]) public accountRaffles;
+
+    // To store pending Airnode requests
     mapping(bytes32 => bool) public pendingRequestIds;
     mapping(bytes32 => uint256) private requestIdToRaffleId;
 
+    // These variables can also be declared as `constant`/`immutable`.
+    // However, this would mean that they would not be updatable.
+    // Since it is impossible to ensure that a particular Airnode will be
+    // indefinitely available, you are recommended to always implement a way
+    // to update these parameters.
     address public airnodeRrpAddress;
     address public sponsor;
     address public sponsorWallet;
-    address public constant ANUairnodeAddress =
+    address public ANUairnodeAddress =
         0x9d3C147cA16DB954873A498e0af5852AB39139f2;
-    bytes32 public constant endpointId =
+    bytes32 public endpointId =
         0x27cc2713e7f968e4e86ed274a051a5c8aaee9cca66946f23af6f29ecea9704c3;
 
     struct Raffle {
@@ -36,6 +53,8 @@ contract Raffler is RrpRequesterV0 {
         bool airnodeSuccess;
     }
 
+    /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)
+    /// @param _sponsorWallet Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)
     constructor(address _airnodeRrpAddress, address _sponsorWallet)
         RrpRequesterV0(_airnodeRrpAddress)
     {
@@ -44,6 +63,9 @@ contract Raffler is RrpRequesterV0 {
         sponsor = msg.sender;
     }
 
+    /// @notice Create a new raffle
+    /// @param _price The price to enter the raffle
+    /// @param _winnerCount The number of winners to be selected
     function create(uint256 _price, uint16 _winnerCount) public {
         require(_winnerCount > 0, "Winner count must be greater than 0");
         _ids.increment();
@@ -63,6 +85,11 @@ contract Raffler is RrpRequesterV0 {
         emit RaffleCreated(raffle.id);
     }
 
+    /// @notice Enter a raffle
+    /// @dev To enter more than one entry, send the price * entryCount in
+    /// the transaction.
+    /// @param _raffleId The raffle id to enter
+    /// @param entryCount The number of entries to enter
     function enter(uint256 _raffleId, uint256 entryCount) public payable {
         Raffle storage raffle = raffles[_raffleId];
         require(raffle.open, "Raffle is closed");
@@ -77,6 +104,12 @@ contract Raffler is RrpRequesterV0 {
         }
     }
 
+    /// @notice Close a raffle
+    /// @dev Called by the raffle owner when the raffle is over.
+    /// This function will close the raffle to new entries and will
+    /// call Airnode for randomness.
+    /// @dev send at least .001 ether to fund the sponsor wallet
+    /// @param _raffleId The raffle id to close
     function close(uint256 _raffleId) public payable {
         Raffle storage raffle = raffles[_raffleId];
         require(
@@ -85,7 +118,7 @@ contract Raffler is RrpRequesterV0 {
         );
         require(raffle.open, "Raffle is closed");
 
-        // Fund Sponsor Wallet
+        // Top up the Sponsor Wallet
         require(
             msg.value >= .001 ether,
             "Please send some funds to the sponsor wallet"
@@ -115,6 +148,8 @@ contract Raffler is RrpRequesterV0 {
         raffle.open = false;
     }
 
+    /// @notice Randomness returned by Airnode is used to choose winners
+    /// @dev Only callable by Airnode.
     function pickWinners(bytes32 requestId, bytes calldata data)
         external
         onlyAirnodeRrp
@@ -124,7 +159,7 @@ contract Raffler is RrpRequesterV0 {
         Raffle storage raffle = raffles[requestIdToRaffleId[requestId]];
         require(!raffle.airnodeSuccess, "Winners already picked");
 
-        uint256[] memory randomNumbers = abi.decode(data, (uint256[]));
+        uint256[] memory randomNumbers = abi.decode(data, (uint256[])); // array of random numbers returned by Airnode
         for (uint256 i = 0; i < randomNumbers.length; i++) {
             uint256 winnerIndex = randomNumbers[i] % raffle.entries.length;
             raffle.winners.push(raffle.entries[winnerIndex]);
@@ -134,11 +169,8 @@ contract Raffler is RrpRequesterV0 {
         payable(raffle.owner).transfer(raffle.balance);
     }
 
-    function getEntriesLength(uint256 _raffleId) public view returns (uint256) {
-        Raffle memory raffle = raffles[_raffleId];
-        return raffle.entries.length;
-    }
-
+    /// @notice Get the raffle entries
+    /// @param _raffleId The raffle id to get the entries of
     function getEntries(uint256 _raffleId)
         public
         view
@@ -147,6 +179,8 @@ contract Raffler is RrpRequesterV0 {
         return raffles[_raffleId].entries;
     }
 
+    /// @notice Get the raffle winners
+    /// @param _raffleId The raffle id to get the winners of
     function getWinners(uint256 _raffleId)
         public
         view

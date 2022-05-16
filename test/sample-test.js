@@ -3,6 +3,7 @@ const { ethers } = require("hardhat");
 
 describe("Raffle", function () {
   let RaffleContract, raffleContract, address1, address2;
+
   it("Deploys", async function () {
     [address1, address2] = await ethers.getSigners();
     RaffleContract = await ethers.getContractFactory("Raffler");
@@ -20,7 +21,7 @@ describe("Raffle", function () {
     );
     const rc = await receipt.wait();
     const [raffleId] = rc.events.find(
-      event => event.event === "RaffleCreated"
+      (event) => event.event === "RaffleCreated"
     ).args;
     const raffle = await raffleContract.raffles(raffleId);
     expect(raffle.id).to.equal(1);

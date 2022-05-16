@@ -4,7 +4,11 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const { ethers } = require("hardhat");
-const { getSponsorWallet, sponsorRequester } = require("./utils");
+const {
+  getSponsorWallet,
+  sponsorRequester,
+  verifyContract,
+} = require("./utils");
 const fs = require("fs");
 const { AirnodeRrpAddresses } = require("@api3/airnode-protocol");
 
@@ -29,13 +33,14 @@ async function main() {
   );
 
   await sponsorRequester(contract.address);
+  console.log("Done! Wait a few minutes before verifying the contract.");
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });
