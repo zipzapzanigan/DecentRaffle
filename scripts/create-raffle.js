@@ -9,13 +9,18 @@ const { getRaffleContract } = require("./utils");
 
 async function main() {
   const rafflerContract = await getRaffleContract();
+  const twoHours = 2 * 60 * 60;
+  const now = parseInt(Date.now() / 1000);
   const createTx = await rafflerContract.create(
     ethers.utils.parseEther(".00001"),
-    2
+    2,
+    "Test Raffle",
+    now - twoHours,
+    now + twoHours
   );
   const rc = await createTx.wait();
   const [raffleId] = rc.events.find(
-    event => event.event === "RaffleCreated"
+    (event) => event.event === "RaffleCreated"
   ).args;
   console.log(`Created Raffle (ID: ${raffleId})`);
 
@@ -34,7 +39,7 @@ async function main() {
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });

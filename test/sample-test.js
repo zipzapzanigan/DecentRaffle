@@ -1,5 +1,6 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const hre = require("hardhat");
+const { ethers } = hre;
 
 describe("Raffle", function () {
   let RaffleContract, raffleContract, address1, address2;
@@ -15,9 +16,14 @@ describe("Raffle", function () {
   });
 
   it("Creates a raffle", async function () {
+    const twoHours = 2 * 60 * 60;
+    const now = parseInt(Date.now() / 1000);
     const receipt = await raffleContract.create(
       ethers.utils.parseEther(".0001"),
-      5
+      5,
+      "Test Raffle",
+      now - twoHours, // Workaround for setting timestamp manually because of forking
+      now + twoHours
     );
     const rc = await receipt.wait();
     const [raffleId] = rc.events.find(
@@ -36,8 +42,8 @@ describe("Raffle", function () {
       await tx.wait();
     }
 
-    const entryLength = await raffleContract.getEntriesLength(1);
-    expect(entryLength).to.equal(200);
+    const entries = await raffleContract.getEntries(1);
+    expect(entries.length).to.equal(200);
   });
 
   it.skip("Pick Winner", async function () {

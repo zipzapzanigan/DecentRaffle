@@ -69,6 +69,9 @@ contract Raffler is RrpRequesterV0 {
     /// @notice Create a new raffle
     /// @param _price The price to enter the raffle
     /// @param _winnerCount The number of winners to be selected
+    /// @param _title Title of the raffle
+    /// @param _startTime Time the raffle starts
+    /// @param _endTime Time the raffle ends
     function create(
         uint256 _price,
         uint16 _winnerCount,
@@ -135,13 +138,6 @@ contract Raffler is RrpRequesterV0 {
         );
         require(raffle.open, "Raffle is closed");
 
-        // Top up the Sponsor Wallet
-        require(
-            msg.value >= .001 ether,
-            "Please send some funds to the sponsor wallet"
-        );
-        payable(sponsorWallet).transfer(msg.value);
-
         if (raffle.entries.length == 0) {
             raffle.open = false;
             return;
@@ -150,6 +146,13 @@ contract Raffler is RrpRequesterV0 {
             raffle.entries.length >= raffle.winnerCount,
             "Not enough entries"
         );
+
+        // Top up the Sponsor Wallet
+        require(
+            msg.value >= .001 ether,
+            "Please send some funds to the sponsor wallet"
+        );
+        payable(sponsorWallet).transfer(msg.value);
 
         bytes32 requestId = airnodeRrp.makeFullRequest(
             ANUairnodeAddress,
@@ -180,7 +183,7 @@ contract Raffler is RrpRequesterV0 {
         for (uint256 i = 0; i < randomNumbers.length; i++) {
             uint256 winnerIndex = randomNumbers[i] % raffle.entries.length;
             raffle.winners.push(raffle.entries[winnerIndex]);
-            delete raffle.entries[winnerIndex];
+            removeAddress(winnerIndex, raffle.entries);
         }
         raffle.airnodeSuccess = true;
         payable(raffle.owner).transfer(raffle.balance);
@@ -225,5 +228,11 @@ contract Raffler is RrpRequesterV0 {
         returns (uint256[] memory)
     {
         return accountRaffles[_account];
+    }
+
+    function removeAddress(uint256 index, address[] storage array) private {
+        require(index < array.length);
+        array[index] = array[array.length - 1];
+        array.pop();
     }
 }

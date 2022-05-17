@@ -4,7 +4,6 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const { ethers } = require("hardhat");
-const fs = require("fs");
 const { getRaffleContract, getRRPContract } = require("./utils");
 
 async function main() {
@@ -20,7 +19,6 @@ async function main() {
       resolve(parsedLog.args.requestId);
     })
   );
-  console.log("Entered Raffle");
   console.log(`Request ID: ${requestId}`);
   console.log(`Waiting for request to be processed...`);
   await new Promise(resolve =>

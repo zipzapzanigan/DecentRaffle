@@ -14,13 +14,15 @@ async function main() {
   console.log(raffle);
   const winners = await rafflerContract.getWinners(raffleId);
   console.log({ winners });
+  const entries = await rafflerContract.getEntries(raffleId);
+  console.log({ entries });
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });
