@@ -225,9 +225,14 @@ contract Raffler is RrpRequesterV0 {
     function getAccountRaffles(address _account)
         public
         view
-        returns (uint256[] memory)
+        returns (Raffle[] memory)
     {
-        return accountRaffles[_account];
+        uint256[] memory _raffleIds = accountRaffles[_account];
+        Raffle[] memory _raffles = new Raffle[](_raffleIds.length);
+        for (uint256 i = 0; i < _raffleIds.length; i++) {
+            _raffles[i] = raffles[_raffleIds[i]];
+        }
+        return _raffles;
     }
 
     function removeAddress(uint256 index, address[] storage array) private {
