@@ -1,13 +1,11 @@
-require("dotenv").config();
+import * as dotenv from "dotenv";
 
-const privateKey = process.env.PRIVATE_KEY;
-const ropstenRPC = process.env.RPC_ROPSTEN;
-const rinkebyRPC = process.env.RPC_RINKEBY;
-const mumbaiRPC = process.env.RPC_MUMBAI;
-const etherscanKey = process.env.ETHERSCAN_KEY;
+import { HardhatUserConfig, task } from "hardhat/config";
+import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-waffle";
+import "@typechain/hardhat";
 
-require("@nomiclabs/hardhat-waffle");
-require("@nomiclabs/hardhat-etherscan");
+dotenv.config();
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -19,13 +17,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
+const privateKey = process.env.PRIVATE_KEY || "";
+const ropstenRPC = process.env.RPC_ROPSTEN || "";
+const rinkebyRPC = process.env.RPC_RINKEBY || "";
+const mumbaiRPC = process.env.RPC_MUMBAI || "";
+const etherscanKey = process.env.ETHERSCAN_KEY || "";
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-module.exports = {
+const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
     ropsten: {
@@ -50,3 +51,5 @@ module.exports = {
     apiKey: etherscanKey,
   },
 };
+
+export default config;

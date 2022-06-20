@@ -1,9 +1,14 @@
+import { Contract, Event, Signer, Wallet } from "ethers";
+
 const { expect } = require("chai");
 const hre = require("hardhat");
 const { ethers } = hre;
 
 describe("Raffle", function () {
-  let RaffleContract, raffleContract, address1, address2;
+  let RaffleContract: Contract,
+    raffleContract: Contract,
+    address1: Wallet,
+    address2: Wallet;
 
   it("Deploys", async function () {
     [address1, address2] = await ethers.getSigners();
@@ -16,8 +21,9 @@ describe("Raffle", function () {
   });
 
   it("Creates a raffle", async function () {
-    const twoHours = 2 * 60 * 60;
-    const now = parseInt(Date.now() / 1000);
+    const twoHours: number = 2 * 60 * 60;
+    // Convert float to integer
+    const now: number = Math.floor(Date.now() / 1000);
     const receipt = await raffleContract.create(
       ethers.utils.parseEther(".0001"),
       5,
@@ -27,7 +33,7 @@ describe("Raffle", function () {
     );
     const rc = await receipt.wait();
     const [raffleId] = rc.events.find(
-      (event) => event.event === "RaffleCreated"
+      (event: Event) => event.event === "RaffleCreated"
     ).args;
     const raffle = await raffleContract.raffles(raffleId);
     expect(raffle.id).to.equal(1);
@@ -35,7 +41,7 @@ describe("Raffle", function () {
 
   it("Enters raffle", async function () {
     const accounts = await ethers.getSigners();
-    for (account of accounts) {
+    for (let account of accounts) {
       const tx = await raffleContract.connect(account).enter(1, 10, {
         value: ethers.utils.parseEther(".001"),
       });

@@ -1,26 +1,26 @@
 const { deriveSponsorWalletAddress } = require("@api3/airnode-admin");
 const airnodeProtocol = require("@api3/airnode-protocol");
 require("dotenv").config();
-const hre = require("hardhat");
+import hre from "hardhat";
+import { ethers } from "hardhat";
 
 async function getSponsorWallet() {
   const anuXpub =
     "xpub6DXSDTZBd4aPVXnv6Q3SmnGUweFv6j24SK77W4qrSFuhGgi666awUiXakjXruUSCDQhhctVG7AQt67gMdaRAsDnDXv23bBRKsMWvRzo6kbf";
   const anuAirnode = "0x9d3C147cA16DB954873A498e0af5852AB39139f2";
-  const privateKey = process.env.PRIVATE_KEY;
+  const privateKey = process.env.PRIVATE_KEY || "";
   const wallet = new ethers.Wallet(privateKey);
 
-  const sponsorWalletAddress = await deriveSponsorWalletAddress(
+  const sponsorWalletAddress: string = await deriveSponsorWalletAddress(
     anuXpub,
     anuAirnode,
     wallet.address
   );
-  console.log({ sponsorWalletAddress });
   return sponsorWalletAddress;
 }
 // getSponsorWallet();
 
-async function sponsorRequester(requesterAddress) {
+async function sponsorRequester(requesterAddress: string) {
   let { chainId } = await ethers.provider.getNetwork();
   if (chainId == 31337) chainId = 4;
   const [wallet] = await ethers.getSigners();
@@ -41,7 +41,7 @@ async function getRaffleContract() {
 }
 
 async function getRRPContract() {
-  const { chainId } = await ethers.provider.getNetwork();
+  let { chainId } = await ethers.provider.getNetwork();
   if (chainId == 31337) chainId = 4;
   const [wallet] = await ethers.getSigners();
   return new ethers.Contract(
@@ -64,7 +64,7 @@ async function verifyContract() {
   console.log("Verified!");
 }
 
-module.exports = {
+export {
   getSponsorWallet,
   sponsorRequester,
   getRaffleContract,

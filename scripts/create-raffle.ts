@@ -2,15 +2,18 @@
 // but useful for running the script in a standalone fashion through `node <script>`.
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
+
+import { Contract, Event } from "ethers";
+
 // Runtime Environment's members available in the global scope.
-const { ethers } = require("hardhat");
+import { ethers } from "hardhat";
 const fs = require("fs");
 const { getRaffleContract } = require("./utils");
 
 async function main() {
-  const rafflerContract = await getRaffleContract();
+  const rafflerContract: Contract = await getRaffleContract();
   const twoHours = 2 * 60 * 60;
-  const now = parseInt(Date.now() / 1000);
+  const now = Math.floor(Date.now() / 1000);
   const createTx = await rafflerContract.create(
     ethers.utils.parseEther(".00001"),
     2,
@@ -20,7 +23,7 @@ async function main() {
   );
   const rc = await createTx.wait();
   const [raffleId] = rc.events.find(
-    (event) => event.event === "RaffleCreated"
+    (event: Event) => event.event === "RaffleCreated"
   ).args;
   console.log(`Created Raffle (ID: ${raffleId})`);
 
