@@ -9,3 +9,6 @@ cache
 artifacts
 
 dist
+
+credentials.json
+yarn.lock
