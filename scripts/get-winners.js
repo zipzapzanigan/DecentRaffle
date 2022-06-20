@@ -16,6 +16,7 @@ async function main() {
   console.log({ winners });
   const entries = await rafflerContract.getEntries(raffleId);
   console.log({ entries });
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
