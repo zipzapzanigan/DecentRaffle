@@ -1,9 +1,10 @@
 import * as dotenv from "dotenv";
-
 import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
+import "hardhat-deploy";
+import networks from "./credentials.json";
 
 dotenv.config();
 
@@ -11,44 +12,33 @@ dotenv.config();
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
-
   for (const account of accounts) {
     console.log(account.address);
   }
 });
 
-const privateKey = process.env.PRIVATE_KEY || "";
-const ropstenRPC = process.env.RPC_ROPSTEN || "";
-const rinkebyRPC = process.env.RPC_RINKEBY || "";
-const mumbaiRPC = process.env.RPC_MUMBAI || "";
-const etherscanKey = process.env.ETHERSCAN_KEY || "";
-
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.4",
-  networks: {
-    ropsten: {
-      url: ropstenRPC,
-      accounts: [privateKey],
-    },
-    rinkeby: {
-      url: rinkebyRPC,
-      accounts: [privateKey],
-    },
-    matic: {
-      url: mumbaiRPC,
-      accounts: [privateKey],
-    },
-    hardhat: {
-      forking: {
-        url: rinkebyRPC,
+  solidity: {
+    version: "0.8.9",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 100,
       },
     },
   },
-  etherscan: {
-    apiKey: etherscanKey,
+  defaultNetwork: "rinkeby",
+  networks: networks,
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+    },
+    signer: {
+      default: 1, // here this will by default take the second account as signer
+    },
   },
 };
 

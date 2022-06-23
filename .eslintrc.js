@@ -15,6 +15,13 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
+  settings: {
+    node: {
+      allowModules: ["electron", "hardhat", "@nomiclabs/hardhat-ethers"],
+      resolvePaths: [__dirname],
+      tryExtensions: [".js", ".ts", ".json", ".node"],
+    },
+  },
   rules: {
     "node/no-unsupported-features/es-syntax": [
       "error",

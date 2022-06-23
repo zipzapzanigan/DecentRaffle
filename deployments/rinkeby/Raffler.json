@@ -1,0 +1,824 @@
+{
+  "address": "0xEb7E8729C632EdE2052F31a6Bf8ED58aE3E34351",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_airnodeRrpAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_sponsorWallet",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        }
+      ],
+      "name": "RaffleCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "ANUairnodeAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "accountRaffles",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "airnodeRrp",
+      "outputs": [
+        {
+          "internalType": "contract IAirnodeRrpV0",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "airnodeRrpAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        }
+      ],
+      "name": "close",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint16",
+          "name": "_winnerCount",
+          "type": "uint16"
+        },
+        {
+          "internalType": "string",
+          "name": "_title",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_endTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "create",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "endpointId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "entryCount",
+          "type": "uint256"
+        }
+      ],
+      "name": "enter",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "getAccountRaffles",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "winnerCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address[]",
+              "name": "winners",
+              "type": "address[]"
+            },
+            {
+              "internalType": "address[]",
+              "name": "entries",
+              "type": "address[]"
+            },
+            {
+              "internalType": "bool",
+              "name": "open",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "airnodeSuccess",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct Raffler.Raffle[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getEntries",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getWinners",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_raffleId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "isWinner",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "pendingRequestIds",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "requestId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "pickWinners",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "raffles",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "winnerCount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "open",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "airnodeSuccess",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sponsor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sponsorWallet",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x5d1639a08f515accfccd99293a7be14f0a506b1e26b1f7cf49925d4a3c9bb0fd",
+  "receipt": {
+    "to": null,
+    "from": "0xfbb5d54a9Ac4AE9a10605bed682616DAd8991489",
+    "contractAddress": "0xEb7E8729C632EdE2052F31a6Bf8ED58aE3E34351",
+    "transactionIndex": 7,
+    "gasUsed": "1745340",
+    "logsBloom": "0x00000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000040000200000001000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000800000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x37b81e05ba93339904b82a3c6088fd2a3476509614d6292ae51303f10db33f16",
+    "transactionHash": "0x5d1639a08f515accfccd99293a7be14f0a506b1e26b1f7cf49925d4a3c9bb0fd",
+    "logs": [
+      {
+        "transactionIndex": 7,
+        "blockNumber": 10899977,
+        "transactionHash": "0x5d1639a08f515accfccd99293a7be14f0a506b1e26b1f7cf49925d4a3c9bb0fd",
+        "address": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd",
+        "topics": [
+          "0xc2e532a12bbcce2bfa2ef9e4bee80180e4e1b1f78618f0d20bc49a648b577c56",
+          "0x000000000000000000000000eb7e8729c632ede2052f31a6bf8ed58ae3e34351",
+          "0x000000000000000000000000eb7e8729c632ede2052f31a6bf8ed58ae3e34351"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "logIndex": 1,
+        "blockHash": "0x37b81e05ba93339904b82a3c6088fd2a3476509614d6292ae51303f10db33f16"
+      }
+    ],
+    "blockNumber": 10899977,
+    "cumulativeGasUsed": "6937785",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd",
+    "0x8844CEF45EA0D410948B2c01753aAae8f86d0842"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "03fbd689f0d22160d03ceb0ad0c2dcfd",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_airnodeRrpAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_sponsorWallet\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"}],\"name\":\"RaffleCreated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"ANUairnodeAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"accountRaffles\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"airnodeRrp\",\"outputs\":[{\"internalType\":\"contract IAirnodeRrpV0\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"airnodeRrpAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"}],\"name\":\"close\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"_winnerCount\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"_title\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_endTime\",\"type\":\"uint256\"}],\"name\":\"create\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"endpointId\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"entryCount\",\"type\":\"uint256\"}],\"name\":\"enter\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_account\",\"type\":\"address\"}],\"name\":\"getAccountRaffles\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"winnerCount\",\"type\":\"uint256\"},{\"internalType\":\"address[]\",\"name\":\"winners\",\"type\":\"address[]\"},{\"internalType\":\"address[]\",\"name\":\"entries\",\"type\":\"address[]\"},{\"internalType\":\"bool\",\"name\":\"open\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"airnodeSuccess\",\"type\":\"bool\"}],\"internalType\":\"struct Raffler.Raffle[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"}],\"name\":\"getEntries\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"}],\"name\":\"getWinners\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_raffleId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"isWinner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"pendingRequestIds\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"pickWinners\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"raffles\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"winnerCount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"open\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"airnodeSuccess\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"sponsor\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"sponsorWallet\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"close(uint256)\":{\"details\":\"Called by the raffle owner when the raffle is over. This function will close the raffle to new entries and will call Airnode for randomness.send at least .001 ether to fund the sponsor wallet\",\"params\":{\"_raffleId\":\"The raffle id to close\"}},\"constructor\":{\"params\":{\"_airnodeRrpAddress\":\"Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)\",\"_sponsorWallet\":\"Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)\"}},\"create(uint256,uint16,string,uint256,uint256)\":{\"params\":{\"_endTime\":\"Time the raffle ends\",\"_price\":\"The price to enter the raffle\",\"_startTime\":\"Time the raffle starts\",\"_title\":\"Title of the raffle\",\"_winnerCount\":\"The number of winners to be selected\"}},\"enter(uint256,uint256)\":{\"details\":\"To enter more than one entry, send the price * entryCount in the transaction.\",\"params\":{\"_raffleId\":\"The raffle id to enter\",\"entryCount\":\"The number of entries to enter\"}},\"getEntries(uint256)\":{\"params\":{\"_raffleId\":\"The raffle id to get the entries of\"}},\"getWinners(uint256)\":{\"params\":{\"_raffleId\":\"The raffle id to get the winners of\"}},\"pickWinners(bytes32,bytes)\":{\"details\":\"Only callable by Airnode.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"close(uint256)\":{\"notice\":\"Close a raffle\"},\"create(uint256,uint16,string,uint256,uint256)\":{\"notice\":\"Create a new raffle\"},\"enter(uint256,uint256)\":{\"notice\":\"Enter a raffle\"},\"getEntries(uint256)\":{\"notice\":\"Get the raffle entries\"},\"getWinners(uint256)\":{\"notice\":\"Get the raffle winners\"},\"pickWinners(bytes32,bytes)\":{\"notice\":\"Randomness returned by Airnode is used to choose winners\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Raffle.sol\":\"Raffler\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100},\"remappings\":[]},\"sources\":{\"@api3/airnode-protocol/contracts/rrp/interfaces/IAirnodeRrpV0.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\nimport \\\"./IAuthorizationUtilsV0.sol\\\";\\nimport \\\"./ITemplateUtilsV0.sol\\\";\\nimport \\\"./IWithdrawalUtilsV0.sol\\\";\\n\\ninterface IAirnodeRrpV0 is\\n    IAuthorizationUtilsV0,\\n    ITemplateUtilsV0,\\n    IWithdrawalUtilsV0\\n{\\n    event SetSponsorshipStatus(\\n        address indexed sponsor,\\n        address indexed requester,\\n        bool sponsorshipStatus\\n    );\\n\\n    event MadeTemplateRequest(\\n        address indexed airnode,\\n        bytes32 indexed requestId,\\n        uint256 requesterRequestCount,\\n        uint256 chainId,\\n        address requester,\\n        bytes32 templateId,\\n        address sponsor,\\n        address sponsorWallet,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        bytes parameters\\n    );\\n\\n    event MadeFullRequest(\\n        address indexed airnode,\\n        bytes32 indexed requestId,\\n        uint256 requesterRequestCount,\\n        uint256 chainId,\\n        address requester,\\n        bytes32 endpointId,\\n        address sponsor,\\n        address sponsorWallet,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        bytes parameters\\n    );\\n\\n    event FulfilledRequest(\\n        address indexed airnode,\\n        bytes32 indexed requestId,\\n        bytes data\\n    );\\n\\n    event FailedRequest(\\n        address indexed airnode,\\n        bytes32 indexed requestId,\\n        string errorMessage\\n    );\\n\\n    function setSponsorshipStatus(address requester, bool sponsorshipStatus)\\n        external;\\n\\n    function makeTemplateRequest(\\n        bytes32 templateId,\\n        address sponsor,\\n        address sponsorWallet,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        bytes calldata parameters\\n    ) external returns (bytes32 requestId);\\n\\n    function makeFullRequest(\\n        address airnode,\\n        bytes32 endpointId,\\n        address sponsor,\\n        address sponsorWallet,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        bytes calldata parameters\\n    ) external returns (bytes32 requestId);\\n\\n    function fulfill(\\n        bytes32 requestId,\\n        address airnode,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        bytes calldata data,\\n        bytes calldata signature\\n    ) external returns (bool callSuccess, bytes memory callData);\\n\\n    function fail(\\n        bytes32 requestId,\\n        address airnode,\\n        address fulfillAddress,\\n        bytes4 fulfillFunctionId,\\n        string calldata errorMessage\\n    ) external;\\n\\n    function sponsorToRequesterToSponsorshipStatus(\\n        address sponsor,\\n        address requester\\n    ) external view returns (bool sponsorshipStatus);\\n\\n    function requesterToRequestCountPlusOne(address requester)\\n        external\\n        view\\n        returns (uint256 requestCountPlusOne);\\n\\n    function requestIsAwaitingFulfillment(bytes32 requestId)\\n        external\\n        view\\n        returns (bool isAwaitingFulfillment);\\n}\\n\",\"keccak256\":\"0x5306571db1377e8c9dd8cb6e6c7a8deaa2d8ec540e7b2b229e9db5aa5da21277\",\"license\":\"MIT\"},\"@api3/airnode-protocol/contracts/rrp/interfaces/IAuthorizationUtilsV0.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface IAuthorizationUtilsV0 {\\n    function checkAuthorizationStatus(\\n        address[] calldata authorizers,\\n        address airnode,\\n        bytes32 requestId,\\n        bytes32 endpointId,\\n        address sponsor,\\n        address requester\\n    ) external view returns (bool status);\\n\\n    function checkAuthorizationStatuses(\\n        address[] calldata authorizers,\\n        address airnode,\\n        bytes32[] calldata requestIds,\\n        bytes32[] calldata endpointIds,\\n        address[] calldata sponsors,\\n        address[] calldata requesters\\n    ) external view returns (bool[] memory statuses);\\n}\\n\",\"keccak256\":\"0x597a40e9911628f6bc1d845c9ebe7c345833e8814caa5ce02a8597d3b4ee7975\",\"license\":\"MIT\"},\"@api3/airnode-protocol/contracts/rrp/interfaces/ITemplateUtilsV0.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface ITemplateUtilsV0 {\\n    event CreatedTemplate(\\n        bytes32 indexed templateId,\\n        address airnode,\\n        bytes32 endpointId,\\n        bytes parameters\\n    );\\n\\n    function createTemplate(\\n        address airnode,\\n        bytes32 endpointId,\\n        bytes calldata parameters\\n    ) external returns (bytes32 templateId);\\n\\n    function getTemplates(bytes32[] calldata templateIds)\\n        external\\n        view\\n        returns (\\n            address[] memory airnodes,\\n            bytes32[] memory endpointIds,\\n            bytes[] memory parameters\\n        );\\n\\n    function templates(bytes32 templateId)\\n        external\\n        view\\n        returns (\\n            address airnode,\\n            bytes32 endpointId,\\n            bytes memory parameters\\n        );\\n}\\n\",\"keccak256\":\"0x4212b264303a78b3c3ed0230cf23b7c3ca58bccec936eccd1d4924347b0fea47\",\"license\":\"MIT\"},\"@api3/airnode-protocol/contracts/rrp/interfaces/IWithdrawalUtilsV0.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface IWithdrawalUtilsV0 {\\n    event RequestedWithdrawal(\\n        address indexed airnode,\\n        address indexed sponsor,\\n        bytes32 indexed withdrawalRequestId,\\n        address sponsorWallet\\n    );\\n\\n    event FulfilledWithdrawal(\\n        address indexed airnode,\\n        address indexed sponsor,\\n        bytes32 indexed withdrawalRequestId,\\n        address sponsorWallet,\\n        uint256 amount\\n    );\\n\\n    function requestWithdrawal(address airnode, address sponsorWallet) external;\\n\\n    function fulfillWithdrawal(\\n        bytes32 withdrawalRequestId,\\n        address airnode,\\n        address sponsor\\n    ) external payable;\\n\\n    function sponsorToWithdrawalRequestCount(address sponsor)\\n        external\\n        view\\n        returns (uint256 withdrawalRequestCount);\\n}\\n\",\"keccak256\":\"0x732a3a2447150d8a8097042719ca1faf35e06cbfec364d1d6b17aae254cfd520\",\"license\":\"MIT\"},\"@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\nimport \\\"../interfaces/IAirnodeRrpV0.sol\\\";\\n\\n/// @title The contract to be inherited to make Airnode RRP requests\\ncontract RrpRequesterV0 {\\n    IAirnodeRrpV0 public immutable airnodeRrp;\\n\\n    /// @dev Reverts if the caller is not the Airnode RRP contract.\\n    /// Use it as a modifier for fulfill and error callback methods, but also\\n    /// check `requestId`.\\n    modifier onlyAirnodeRrp() {\\n        require(msg.sender == address(airnodeRrp), \\\"Caller not Airnode RRP\\\");\\n        _;\\n    }\\n\\n    /// @dev Airnode RRP address is set at deployment and is immutable.\\n    /// RrpRequester is made its own sponsor by default. RrpRequester can also\\n    /// be sponsored by others and use these sponsorships while making\\n    /// requests, i.e., using this default sponsorship is optional.\\n    /// @param _airnodeRrp Airnode RRP contract address\\n    constructor(address _airnodeRrp) {\\n        airnodeRrp = IAirnodeRrpV0(_airnodeRrp);\\n        IAirnodeRrpV0(_airnodeRrp).setSponsorshipStatus(address(this), true);\\n    }\\n}\\n\",\"keccak256\":\"0x5a517e7b6e9a3bc7667a44866edbb6db81d8b0fde16325d1d49d1e64494568c8\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Counters.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Counters.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title Counters\\n * @author Matt Condon (@shrugs)\\n * @dev Provides counters that can only be incremented, decremented or reset. This can be used e.g. to track the number\\n * of elements in a mapping, issuing ERC721 ids, or counting request ids.\\n *\\n * Include with `using Counters for Counters.Counter;`\\n */\\nlibrary Counters {\\n    struct Counter {\\n        // This variable should never be directly accessed by users of the library: interactions must be restricted to\\n        // the library's function. As of Solidity v0.5.2, this cannot be enforced, though there is a proposal to add\\n        // this feature: see https://github.com/ethereum/solidity/issues/4637\\n        uint256 _value; // default: 0\\n    }\\n\\n    function current(Counter storage counter) internal view returns (uint256) {\\n        return counter._value;\\n    }\\n\\n    function increment(Counter storage counter) internal {\\n        unchecked {\\n            counter._value += 1;\\n        }\\n    }\\n\\n    function decrement(Counter storage counter) internal {\\n        uint256 value = counter._value;\\n        require(value > 0, \\\"Counter: decrement overflow\\\");\\n        unchecked {\\n            counter._value = value - 1;\\n        }\\n    }\\n\\n    function reset(Counter storage counter) internal {\\n        counter._value = 0;\\n    }\\n}\\n\",\"keccak256\":\"0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1\",\"license\":\"MIT\"},\"contracts/Raffle.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\n/*\\n   ___  ___ _  _  ___ \\n  / _ \\\\| _ \\\\ \\\\| |/ __|\\n | (_) |   / .` | (_ |\\n  \\\\__\\\\_\\\\_|_\\\\_|\\\\_|\\\\___|\\n                      \\n*/\\n/// @title Raffle Contract as PoC for using QRNGs\\n/// @notice This contract is not secure. Do not use it in production. Refer to\\n/// the contract for more information.\\n/// @dev See README.md for more information.\\npragma solidity ^0.8.0;\\n\\nimport \\\"@openzeppelin/contracts/utils/Counters.sol\\\";\\nimport \\\"@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol\\\";\\n\\ncontract Raffler is RrpRequesterV0 {\\n    using Counters for Counters.Counter;\\n    Counters.Counter private _ids;\\n\\n    event RaffleCreated(uint256 _raffleId);\\n\\n    mapping(uint256 => Raffle) public raffles;\\n    mapping(address => uint256[]) public accountRaffles;\\n\\n    // To store pending Airnode requests\\n    mapping(bytes32 => bool) public pendingRequestIds;\\n    mapping(bytes32 => uint256) private requestIdToRaffleId;\\n\\n    // These variables can also be declared as `constant`/`immutable`.\\n    // However, this would mean that they would not be updatable.\\n    // Since it is impossible to ensure that a particular Airnode will be\\n    // indefinitely available, you are recommended to always implement a way\\n    // to update these parameters.\\n    address public airnodeRrpAddress;\\n    address public sponsor;\\n    address public sponsorWallet;\\n    address public ANUairnodeAddress =\\n        0x9d3C147cA16DB954873A498e0af5852AB39139f2;\\n    bytes32 public endpointId =\\n        0x27cc2713e7f968e4e86ed274a051a5c8aaee9cca66946f23af6f29ecea9704c3;\\n\\n    struct Raffle {\\n        uint256 id;\\n        string title;\\n        uint256 price;\\n        uint256 winnerCount;\\n        address[] winners;\\n        address[] entries;\\n        bool open;\\n        uint256 startTime;\\n        uint256 endTime;\\n        uint256 balance;\\n        address owner;\\n        bool airnodeSuccess;\\n    }\\n\\n    /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)\\n    /// @param _sponsorWallet Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)\\n    constructor(address _airnodeRrpAddress, address _sponsorWallet)\\n        RrpRequesterV0(_airnodeRrpAddress)\\n    {\\n        airnodeRrpAddress = _airnodeRrpAddress;\\n        sponsorWallet = _sponsorWallet;\\n        sponsor = msg.sender;\\n    }\\n\\n    /// @notice Create a new raffle\\n    /// @param _price The price to enter the raffle\\n    /// @param _winnerCount The number of winners to be selected\\n    /// @param _title Title of the raffle\\n    /// @param _startTime Time the raffle starts\\n    /// @param _endTime Time the raffle ends\\n    function create(\\n        uint256 _price,\\n        uint16 _winnerCount,\\n        string memory _title,\\n        uint256 _startTime,\\n        uint256 _endTime\\n    ) public {\\n        require(_winnerCount > 0, \\\"Winner count must be greater than 0\\\");\\n        _ids.increment();\\n        Raffle memory raffle = Raffle(\\n            _ids.current(),\\n            _title,\\n            _price,\\n            _winnerCount,\\n            new address[](0),\\n            new address[](0),\\n            true,\\n            _startTime,\\n            _endTime,\\n            0,\\n            msg.sender,\\n            false\\n        );\\n        raffles[raffle.id] = raffle;\\n        accountRaffles[msg.sender].push(raffle.id);\\n        emit RaffleCreated(raffle.id);\\n    }\\n\\n    /// @notice Enter a raffle\\n    /// @dev To enter more than one entry, send the price * entryCount in\\n    /// the transaction.\\n    /// @param _raffleId The raffle id to enter\\n    /// @param entryCount The number of entries to enter\\n    function enter(uint256 _raffleId, uint256 entryCount) public payable {\\n        Raffle storage raffle = raffles[_raffleId];\\n        require(raffle.open, \\\"Raffle is closed\\\");\\n        require(entryCount >= 1, \\\"Entry count must be at least 1\\\");\\n        require(\\n            block.timestamp >= raffle.startTime &&\\n                block.timestamp <= raffle.endTime,\\n            \\\"Raffle is closed\\\"\\n        );\\n        require(\\n            msg.value == raffle.price * entryCount,\\n            \\\"Entry price does not match\\\"\\n        );\\n        raffle.balance += msg.value;\\n        for (uint256 i = 0; i < entryCount; i++) {\\n            raffle.entries.push(msg.sender);\\n        }\\n    }\\n\\n    /// @notice Close a raffle\\n    /// @dev Called by the raffle owner when the raffle is over.\\n    /// This function will close the raffle to new entries and will\\n    /// call Airnode for randomness.\\n    /// @dev send at least .001 ether to fund the sponsor wallet\\n    /// @param _raffleId The raffle id to close\\n    function close(uint256 _raffleId) public payable {\\n        Raffle storage raffle = raffles[_raffleId];\\n        require(\\n            msg.sender == raffle.owner,\\n            \\\"Only raffle owner can pick winners\\\"\\n        );\\n        require(raffle.open, \\\"Raffle is closed\\\");\\n\\n        if (raffle.entries.length == 0) {\\n            raffle.open = false;\\n            return;\\n        }\\n        require(\\n            raffle.entries.length >= raffle.winnerCount,\\n            \\\"Not enough entries\\\"\\n        );\\n\\n        // Top up the Sponsor Wallet\\n        require(\\n            msg.value >= .001 ether,\\n            \\\"Please send some funds to the sponsor wallet\\\"\\n        );\\n        payable(sponsorWallet).transfer(msg.value);\\n\\n        bytes32 requestId = airnodeRrp.makeFullRequest(\\n            ANUairnodeAddress,\\n            endpointId,\\n            sponsor,\\n            sponsorWallet,\\n            address(this),\\n            this.pickWinners.selector,\\n            abi.encode(bytes32(\\\"1u\\\"), bytes32(\\\"size\\\"), raffle.winnerCount)\\n        );\\n        pendingRequestIds[requestId] = true;\\n        requestIdToRaffleId[requestId] = _raffleId;\\n        raffle.open = false;\\n    }\\n\\n    /// @notice Randomness returned by Airnode is used to choose winners\\n    /// @dev Only callable by Airnode.\\n    function pickWinners(bytes32 requestId, bytes calldata data)\\n        external\\n        onlyAirnodeRrp\\n    {\\n        require(pendingRequestIds[requestId], \\\"No such request made\\\");\\n        delete pendingRequestIds[requestId];\\n        Raffle storage raffle = raffles[requestIdToRaffleId[requestId]];\\n        require(!raffle.airnodeSuccess, \\\"Winners already picked\\\");\\n\\n        uint256[] memory randomNumbers = abi.decode(data, (uint256[])); // array of random numbers returned by Airnode\\n        for (uint256 i = 0; i < randomNumbers.length; i++) {\\n            uint256 winnerIndex = randomNumbers[i] % raffle.entries.length;\\n            raffle.winners.push(raffle.entries[winnerIndex]);\\n            removeAddress(winnerIndex, raffle.entries);\\n        }\\n        raffle.airnodeSuccess = true;\\n        payable(raffle.owner).transfer(raffle.balance);\\n    }\\n\\n    /// @notice Get the raffle entries\\n    /// @param _raffleId The raffle id to get the entries of\\n    function getEntries(uint256 _raffleId)\\n        public\\n        view\\n        returns (address[] memory)\\n    {\\n        return raffles[_raffleId].entries;\\n    }\\n\\n    /// @notice Get the raffle winners\\n    /// @param _raffleId The raffle id to get the winners of\\n    function getWinners(uint256 _raffleId)\\n        public\\n        view\\n        returns (address[] memory)\\n    {\\n        return raffles[_raffleId].winners;\\n    }\\n\\n    function isWinner(uint256 _raffleId, address _address)\\n        public\\n        view\\n        returns (bool)\\n    {\\n        for (uint256 i = 0; i < raffles[_raffleId].winners.length; i++) {\\n            if (raffles[_raffleId].winners[i] == _address) {\\n                return true;\\n            }\\n        }\\n        return false;\\n    }\\n\\n    function getAccountRaffles(address _account)\\n        public\\n        view\\n        returns (Raffle[] memory)\\n    {\\n        uint256[] memory _raffleIds = accountRaffles[_account];\\n        Raffle[] memory _raffles = new Raffle[](_raffleIds.length);\\n        for (uint256 i = 0; i < _raffleIds.length; i++) {\\n            _raffles[i] = raffles[_raffleIds[i]];\\n        }\\n        return _raffles;\\n    }\\n\\n    function removeAddress(uint256 index, address[] storage array) private {\\n        require(index < array.length);\\n        array[index] = array[array.length - 1];\\n        array.pop();\\n    }\\n}\\n\",\"keccak256\":\"0x4dfffe31abaae5f398109738b8b419e55b67e1e1a8c3bfdee34be1ec18c75d92\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x60a0604052600880546001600160a01b031916739d3c147ca16db954873a498e0af5852ab39139f21790557f27cc2713e7f968e4e86ed274a051a5c8aaee9cca66946f23af6f29ecea9704c36009553480156200005b57600080fd5b5060405162001d4438038062001d448339810160408190526200007e9162000147565b6001600160a01b0382166080819052604051632b77c09f60e21b81523060048201526001602482015283919063addf027c90604401600060405180830381600087803b158015620000ce57600080fd5b505af1158015620000e3573d6000803e3d6000fd5b5050600580546001600160a01b039687166001600160a01b03199182161790915560078054959096169481169490941790945550506006805490911633179055506200017f565b80516001600160a01b03811681146200014257600080fd5b919050565b600080604083850312156200015b57600080fd5b62000166836200012a565b915062000176602084016200012a565b90509250929050565b608051611b9b620001a9600039600081816102130152818161053901526108160152611b9b6000f3fe6080604052600436106100de5760003560e01c806377c936621161008557806377c936621461024d57806377e20df81461026d578063960972c714610283578063ab98dcdd146102b0578063bdd415af146102d0578063bf90fb4e146102f0578063c07724ec14610310578063d3549ebd14610330578063e8ac21011461035057600080fd5b80630aebeb4e146100e357806323972aef146100f85780632d02cafc1461010b5780633f532acd1461013e5780635d4bc0ce1461015e5780636040a966146101945780636b1426a4146101d457806371bab66614610201575b600080fd5b6100f66100f136600461145c565b610370565b005b6100f6610106366004611475565b610661565b34801561011757600080fd5b5061012b6101263660046114b3565b6107da565b6040519081526020015b60405180910390f35b34801561014a57600080fd5b506100f66101593660046114dd565b61080b565b34801561016a57600080fd5b5061017e61017936600461145c565b610a6b565b6040516101359a999897969594939291906115a6565b3480156101a057600080fd5b506101c46101af36600461145c565b60036020526000908152604090205460ff1681565b6040519015158152602001610135565b3480156101e057600080fd5b506101f46101ef36600461145c565b610b54565b604051610135919061160d565b34801561020d57600080fd5b506102357f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610135565b34801561025957600080fd5b50600654610235906001600160a01b031681565b34801561027957600080fd5b5061012b60095481565b34801561028f57600080fd5b506102a361029e36600461165a565b610bc3565b60405161013591906116c0565b3480156102bc57600080fd5b50600854610235906001600160a01b031681565b3480156102dc57600080fd5b506101c46102eb3660046117d7565b610f31565b3480156102fc57600080fd5b50600754610235906001600160a01b031681565b34801561031c57600080fd5b506100f661032b36600461184a565b610fc0565b34801561033c57600080fd5b506101f461034b36600461145c565b611240565b34801561035c57600080fd5b50600554610235906001600160a01b031681565b6000818152600160205260409020600a8101546001600160a01b031633146103ea5760405162461bcd60e51b815260206004820152602260248201527f4f6e6c7920726166666c65206f776e65722063616e207069636b2077696e6e65604482015261727360f01b60648201526084015b60405180910390fd5b600681015460ff1661040e5760405162461bcd60e51b81526004016103e190611914565b600581015461042557600601805460ff1916905550565b6003810154600582015410156104725760405162461bcd60e51b81526020600482015260126024820152714e6f7420656e6f75676820656e747269657360701b60448201526064016103e1565b66038d7ea4c680003410156104de5760405162461bcd60e51b815260206004820152602c60248201527f506c656173652073656e6420736f6d652066756e647320746f2074686520737060448201526b1bdb9cdbdc881dd85b1b195d60a21b60648201526084016103e1565b6007546040516001600160a01b03909116903480156108fc02916000818181858888f19350505050158015610517573d6000803e3d6000fd5b5060085460095460065460075460038501546040516000956001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811696636e6be03f96928216959094928216939116913091633f532acd60e01b916105a69161317560f01b916373697a6560e01b916020019283526020830191909152604082015260600190565b6040516020818303038152906040526040518863ffffffff1660e01b81526004016105d7979695949392919061193e565b602060405180830381600087803b1580156105f157600080fd5b505af1158015610605573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610629919061199e565b6000908152600360209081526040808320805460ff199081166001179091556004909252909120939093555060060180549091169055565b6000828152600160205260409020600681015460ff166106935760405162461bcd60e51b81526004016103e190611914565b60018210156106e45760405162461bcd60e51b815260206004820152601e60248201527f456e74727920636f756e74206d757374206265206174206c656173742031000060448201526064016103e1565b806007015442101580156106fc575080600801544211155b6107185760405162461bcd60e51b81526004016103e190611914565b81816002015461072891906119cd565b34146107765760405162461bcd60e51b815260206004820152601a60248201527f456e74727920707269636520646f6573206e6f74206d6174636800000000000060448201526064016103e1565b3481600901600082825461078a91906119ec565b90915550600090505b828110156107d457600582018054600181018255600091825260209091200180546001600160a01b03191633179055806107cc81611a04565b915050610793565b50505050565b600260205281600052604060002081815481106107f657600080fd5b90600052602060002001600091509150505481565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461087c5760405162461bcd60e51b8152602060048201526016602482015275043616c6c6572206e6f74204169726e6f6465205252560541b60448201526064016103e1565b60008381526003602052604090205460ff166108d15760405162461bcd60e51b81526020600482015260146024820152734e6f20737563682072657175657374206d61646560601b60448201526064016103e1565b6000838152600360209081526040808320805460ff191690556004825280832054835260019091529020600a810154600160a01b900460ff16156109505760405162461bcd60e51b815260206004820152601660248201527515da5b9b995c9cc8185b1c9958591e481c1a58dad95960521b60448201526064016103e1565b600061095e83850185611a1f565b905060005b8151811015610a10576000836005018054905083838151811061098857610988611ac5565b602002602001015161099a9190611adb565b9050836004018460050182815481106109b5576109b5611ac5565b60009182526020808320909101548354600181018555938352912090910180546001600160a01b0319166001600160a01b039092169190911790556109fd81600586016112ad565b5080610a0881611a04565b915050610963565b50600a8201805460ff60a01b198116600160a01b1790915560098301546040516001600160a01b039092169181156108fc0291906000818181858888f19350505050158015610a63573d6000803e3d6000fd5b505050505050565b600160208190526000918252604090912080549181018054610a8c90611afd565b80601f0160208091040260200160405190810160405280929190818152602001828054610ab890611afd565b8015610b055780601f10610ada57610100808354040283529160200191610b05565b820191906000526020600020905b815481529060010190602001808311610ae857829003601f168201915b50505050600283015460038401546006850154600786015460088701546009880154600a909801549697949693955060ff92831694919390926001600160a01b03821691600160a01b9004168a565b600081815260016020908152604091829020600401805483518184028101840190945280845260609392830182828015610bb757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610b99575b50505050509050919050565b6001600160a01b0381166000908152600260209081526040808320805482518185028101850190935280835260609493830182828015610c2257602002820191906000526020600020905b815481526020019060010190808311610c0e575b505050505090506000815167ffffffffffffffff811115610c4557610c45611803565b604051908082528060200260200182016040528015610ce757816020015b610cd460405180610180016040528060008152602001606081526020016000815260200160008152602001606081526020016060815260200160001515815260200160008152602001600081526020016000815260200160006001600160a01b031681526020016000151581525090565b815260200190600190039081610c635790505b50905060005b8251811015610f295760016000848381518110610d0c57610d0c611ac5565b602002602001015181526020019081526020016000206040518061018001604052908160008201548152602001600182018054610d4890611afd565b80601f0160208091040260200160405190810160405280929190818152602001828054610d7490611afd565b8015610dc15780601f10610d9657610100808354040283529160200191610dc1565b820191906000526020600020905b815481529060010190602001808311610da457829003601f168201915b50505050508152602001600282015481526020016003820154815260200160048201805480602002602001604051908101604052809291908181526020018280548015610e3757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610e19575b5050505050815260200160058201805480602002602001604051908101604052809291908181526020018280548015610e9957602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610e7b575b5050509183525050600682015460ff90811615156020830152600783015460408301526008830154606083015260098301546080830152600a909201546001600160a01b03811660a0830152600160a01b9004909116151560c0909101528251839083908110610f0b57610f0b611ac5565b60200260200101819052508080610f2190611a04565b915050610ced565b509392505050565b6000805b600084815260016020526040902060040154811015610fb457600084815260016020526040902060040180546001600160a01b038516919083908110610f7d57610f7d611ac5565b6000918252602090912001546001600160a01b03161415610fa2576001915050610fba565b80610fac81611a04565b915050610f35565b50600090505b92915050565b60008461ffff16116110205760405162461bcd60e51b815260206004820152602360248201527f57696e6e657220636f756e74206d75737420626520677265617465722074686160448201526206e20360ec1b60648201526084016103e1565b61102e600080546001019055565b600060405180610180016040528061104560005490565b8152602081018690526040810188905261ffff87166060820152608001600060405190808252806020026020018201604052801561108d578160200160208202803683370190505b50815260200160006040519080825280602002602001820160405280156110be578160200160208202803683370190505b508152600160208083018290526040808401889052606084018790526000608085018190523360a086015260c090940184905284518452828252909220835181558383015180519495508594919361111b9385019291019061136e565b5060408201516002820155606082015160038201556080820151805161114b9160048401916020909101906113f2565b5060a082015180516111679160058401916020909101906113f2565b5060c082015160068201805460ff191691151591909117905560e0820151600782015561010082015160088201556101208201516009820155610140820151600a9091018054610160909301516001600160a01b039092166001600160a81b031990931692909217600160a01b9115159190910217905533600090815260026020908152604080832084518154600181018355918552938390200192909255825191519182527f0b5745354685a046e72f24602bcf00fa0ee07f0bf511afb5f2d3ab636241e41b910160405180910390a1505050505050565b600081815260016020908152604091829020600501805483518184028101840190945280845260609392830182828015610bb7576020028201919060005260206000209081546001600160a01b03168152600190910190602001808311610b995750505050509050919050565b805482106112ba57600080fd5b805481906112ca90600190611b38565b815481106112da576112da611ac5565b9060005260206000200160009054906101000a90046001600160a01b031681838154811061130a5761130a611ac5565b9060005260206000200160006101000a8154816001600160a01b0302191690836001600160a01b031602179055508080548061134857611348611b4f565b600082815260209020810160001990810180546001600160a01b03191690550190555050565b82805461137a90611afd565b90600052602060002090601f01602090048101928261139c57600085556113e2565b82601f106113b557805160ff19168380011785556113e2565b828001600101855582156113e2579182015b828111156113e25782518255916020019190600101906113c7565b506113ee929150611447565b5090565b8280548282559060005260206000209081019282156113e2579160200282015b828111156113e257825182546001600160a01b0319166001600160a01b03909116178255602090920191600190910190611412565b5b808211156113ee5760008155600101611448565b60006020828403121561146e57600080fd5b5035919050565b6000806040838503121561148857600080fd5b50508035926020909101359150565b80356001600160a01b03811681146114ae57600080fd5b919050565b600080604083850312156114c657600080fd5b6114cf83611497565b946020939093013593505050565b6000806000604084860312156114f257600080fd5b83359250602084013567ffffffffffffffff8082111561151157600080fd5b818601915086601f83011261152557600080fd5b81358181111561153457600080fd5b87602082850101111561154657600080fd5b6020830194508093505050509250925092565b6000815180845260005b8181101561157f57602081850181015186830182015201611563565b81811115611591576000602083870101525b50601f01601f19169290920160200192915050565b60006101408c83528060208401526115c08184018d611559565b604084019b909b5250506060810197909752941515608087015260a086019390935260c085019190915260e08401526001600160a01b031661010083015215156101209091015292915050565b6020808252825182820181905260009190848201906040850190845b8181101561164e5783516001600160a01b031683529284019291840191600101611629565b50909695505050505050565b60006020828403121561166c57600080fd5b61167582611497565b9392505050565b600081518084526020808501945080840160005b838110156116b55781516001600160a01b031687529582019590820190600101611690565b509495945050505050565b60006020808301818452808551808352604092508286019150828160051b87010184880160005b838110156117c957603f1989840301855281516101808151855288820151818a87015261171682870182611559565b9150508782015188860152606080830151818701525060808083015186830382880152611743838261167c565b9250505060a0808301518683038288015261175e838261167c565b9250505060c0808301516117758288018215159052565b505060e0828101519086015261010080830151908601526101208083015190860152610140808301516001600160a01b031690860152610160918201511515919094015293860193908601906001016116e7565b509098975050505050505050565b600080604083850312156117ea57600080fd5b823591506117fa60208401611497565b90509250929050565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f1916810167ffffffffffffffff8111828210171561184257611842611803565b604052919050565b600080600080600060a0868803121561186257600080fd5b8535945060208087013561ffff8116811461187c57600080fd5b9450604087013567ffffffffffffffff8082111561189957600080fd5b818901915089601f8301126118ad57600080fd5b8135818111156118bf576118bf611803565b6118d1601f8201601f19168501611819565b91508082528a848285010111156118e757600080fd5b80848401858401376000908201909301929092525094979396509394606081013594506080013592915050565b60208082526010908201526f149859999b19481a5cc818db1bdcd95960821b604082015260600190565b6001600160a01b0388811682526020820188905286811660408301528581166060830152841660808201526001600160e01b0319831660a082015260e060c0820181905260009061199190830184611559565b9998505050505050505050565b6000602082840312156119b057600080fd5b5051919050565b634e487b7160e01b600052601160045260246000fd5b60008160001904831182151516156119e7576119e76119b7565b500290565b600082198211156119ff576119ff6119b7565b500190565b6000600019821415611a1857611a186119b7565b5060010190565b60006020808385031215611a3257600080fd5b823567ffffffffffffffff80821115611a4a57600080fd5b818501915085601f830112611a5e57600080fd5b813581811115611a7057611a70611803565b8060051b9150611a81848301611819565b8181529183018401918481019088841115611a9b57600080fd5b938501935b83851015611ab957843582529385019390850190611aa0565b98975050505050505050565b634e487b7160e01b600052603260045260246000fd5b600082611af857634e487b7160e01b600052601260045260246000fd5b500690565b600181811c90821680611b1157607f821691505b60208210811415611b3257634e487b7160e01b600052602260045260246000fd5b50919050565b600082821015611b4a57611b4a6119b7565b500390565b634e487b7160e01b600052603160045260246000fdfea26469706673582212205c6f0191326b546e3ca5733b167f4d94a22a8484f2ad000e10a9177f01dd9f8564736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600436106100de5760003560e01c806377c936621161008557806377c936621461024d57806377e20df81461026d578063960972c714610283578063ab98dcdd146102b0578063bdd415af146102d0578063bf90fb4e146102f0578063c07724ec14610310578063d3549ebd14610330578063e8ac21011461035057600080fd5b80630aebeb4e146100e357806323972aef146100f85780632d02cafc1461010b5780633f532acd1461013e5780635d4bc0ce1461015e5780636040a966146101945780636b1426a4146101d457806371bab66614610201575b600080fd5b6100f66100f136600461145c565b610370565b005b6100f6610106366004611475565b610661565b34801561011757600080fd5b5061012b6101263660046114b3565b6107da565b6040519081526020015b60405180910390f35b34801561014a57600080fd5b506100f66101593660046114dd565b61080b565b34801561016a57600080fd5b5061017e61017936600461145c565b610a6b565b6040516101359a999897969594939291906115a6565b3480156101a057600080fd5b506101c46101af36600461145c565b60036020526000908152604090205460ff1681565b6040519015158152602001610135565b3480156101e057600080fd5b506101f46101ef36600461145c565b610b54565b604051610135919061160d565b34801561020d57600080fd5b506102357f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610135565b34801561025957600080fd5b50600654610235906001600160a01b031681565b34801561027957600080fd5b5061012b60095481565b34801561028f57600080fd5b506102a361029e36600461165a565b610bc3565b60405161013591906116c0565b3480156102bc57600080fd5b50600854610235906001600160a01b031681565b3480156102dc57600080fd5b506101c46102eb3660046117d7565b610f31565b3480156102fc57600080fd5b50600754610235906001600160a01b031681565b34801561031c57600080fd5b506100f661032b36600461184a565b610fc0565b34801561033c57600080fd5b506101f461034b36600461145c565b611240565b34801561035c57600080fd5b50600554610235906001600160a01b031681565b6000818152600160205260409020600a8101546001600160a01b031633146103ea5760405162461bcd60e51b815260206004820152602260248201527f4f6e6c7920726166666c65206f776e65722063616e207069636b2077696e6e65604482015261727360f01b60648201526084015b60405180910390fd5b600681015460ff1661040e5760405162461bcd60e51b81526004016103e190611914565b600581015461042557600601805460ff1916905550565b6003810154600582015410156104725760405162461bcd60e51b81526020600482015260126024820152714e6f7420656e6f75676820656e747269657360701b60448201526064016103e1565b66038d7ea4c680003410156104de5760405162461bcd60e51b815260206004820152602c60248201527f506c656173652073656e6420736f6d652066756e647320746f2074686520737060448201526b1bdb9cdbdc881dd85b1b195d60a21b60648201526084016103e1565b6007546040516001600160a01b03909116903480156108fc02916000818181858888f19350505050158015610517573d6000803e3d6000fd5b5060085460095460065460075460038501546040516000956001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811696636e6be03f96928216959094928216939116913091633f532acd60e01b916105a69161317560f01b916373697a6560e01b916020019283526020830191909152604082015260600190565b6040516020818303038152906040526040518863ffffffff1660e01b81526004016105d7979695949392919061193e565b602060405180830381600087803b1580156105f157600080fd5b505af1158015610605573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610629919061199e565b6000908152600360209081526040808320805460ff199081166001179091556004909252909120939093555060060180549091169055565b6000828152600160205260409020600681015460ff166106935760405162461bcd60e51b81526004016103e190611914565b60018210156106e45760405162461bcd60e51b815260206004820152601e60248201527f456e74727920636f756e74206d757374206265206174206c656173742031000060448201526064016103e1565b806007015442101580156106fc575080600801544211155b6107185760405162461bcd60e51b81526004016103e190611914565b81816002015461072891906119cd565b34146107765760405162461bcd60e51b815260206004820152601a60248201527f456e74727920707269636520646f6573206e6f74206d6174636800000000000060448201526064016103e1565b3481600901600082825461078a91906119ec565b90915550600090505b828110156107d457600582018054600181018255600091825260209091200180546001600160a01b03191633179055806107cc81611a04565b915050610793565b50505050565b600260205281600052604060002081815481106107f657600080fd5b90600052602060002001600091509150505481565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461087c5760405162461bcd60e51b8152602060048201526016602482015275043616c6c6572206e6f74204169726e6f6465205252560541b60448201526064016103e1565b60008381526003602052604090205460ff166108d15760405162461bcd60e51b81526020600482015260146024820152734e6f20737563682072657175657374206d61646560601b60448201526064016103e1565b6000838152600360209081526040808320805460ff191690556004825280832054835260019091529020600a810154600160a01b900460ff16156109505760405162461bcd60e51b815260206004820152601660248201527515da5b9b995c9cc8185b1c9958591e481c1a58dad95960521b60448201526064016103e1565b600061095e83850185611a1f565b905060005b8151811015610a10576000836005018054905083838151811061098857610988611ac5565b602002602001015161099a9190611adb565b9050836004018460050182815481106109b5576109b5611ac5565b60009182526020808320909101548354600181018555938352912090910180546001600160a01b0319166001600160a01b039092169190911790556109fd81600586016112ad565b5080610a0881611a04565b915050610963565b50600a8201805460ff60a01b198116600160a01b1790915560098301546040516001600160a01b039092169181156108fc0291906000818181858888f19350505050158015610a63573d6000803e3d6000fd5b505050505050565b600160208190526000918252604090912080549181018054610a8c90611afd565b80601f0160208091040260200160405190810160405280929190818152602001828054610ab890611afd565b8015610b055780601f10610ada57610100808354040283529160200191610b05565b820191906000526020600020905b815481529060010190602001808311610ae857829003601f168201915b50505050600283015460038401546006850154600786015460088701546009880154600a909801549697949693955060ff92831694919390926001600160a01b03821691600160a01b9004168a565b600081815260016020908152604091829020600401805483518184028101840190945280845260609392830182828015610bb757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610b99575b50505050509050919050565b6001600160a01b0381166000908152600260209081526040808320805482518185028101850190935280835260609493830182828015610c2257602002820191906000526020600020905b815481526020019060010190808311610c0e575b505050505090506000815167ffffffffffffffff811115610c4557610c45611803565b604051908082528060200260200182016040528015610ce757816020015b610cd460405180610180016040528060008152602001606081526020016000815260200160008152602001606081526020016060815260200160001515815260200160008152602001600081526020016000815260200160006001600160a01b031681526020016000151581525090565b815260200190600190039081610c635790505b50905060005b8251811015610f295760016000848381518110610d0c57610d0c611ac5565b602002602001015181526020019081526020016000206040518061018001604052908160008201548152602001600182018054610d4890611afd565b80601f0160208091040260200160405190810160405280929190818152602001828054610d7490611afd565b8015610dc15780601f10610d9657610100808354040283529160200191610dc1565b820191906000526020600020905b815481529060010190602001808311610da457829003601f168201915b50505050508152602001600282015481526020016003820154815260200160048201805480602002602001604051908101604052809291908181526020018280548015610e3757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610e19575b5050505050815260200160058201805480602002602001604051908101604052809291908181526020018280548015610e9957602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610e7b575b5050509183525050600682015460ff90811615156020830152600783015460408301526008830154606083015260098301546080830152600a909201546001600160a01b03811660a0830152600160a01b9004909116151560c0909101528251839083908110610f0b57610f0b611ac5565b60200260200101819052508080610f2190611a04565b915050610ced565b509392505050565b6000805b600084815260016020526040902060040154811015610fb457600084815260016020526040902060040180546001600160a01b038516919083908110610f7d57610f7d611ac5565b6000918252602090912001546001600160a01b03161415610fa2576001915050610fba565b80610fac81611a04565b915050610f35565b50600090505b92915050565b60008461ffff16116110205760405162461bcd60e51b815260206004820152602360248201527f57696e6e657220636f756e74206d75737420626520677265617465722074686160448201526206e20360ec1b60648201526084016103e1565b61102e600080546001019055565b600060405180610180016040528061104560005490565b8152602081018690526040810188905261ffff87166060820152608001600060405190808252806020026020018201604052801561108d578160200160208202803683370190505b50815260200160006040519080825280602002602001820160405280156110be578160200160208202803683370190505b508152600160208083018290526040808401889052606084018790526000608085018190523360a086015260c090940184905284518452828252909220835181558383015180519495508594919361111b9385019291019061136e565b5060408201516002820155606082015160038201556080820151805161114b9160048401916020909101906113f2565b5060a082015180516111679160058401916020909101906113f2565b5060c082015160068201805460ff191691151591909117905560e0820151600782015561010082015160088201556101208201516009820155610140820151600a9091018054610160909301516001600160a01b039092166001600160a81b031990931692909217600160a01b9115159190910217905533600090815260026020908152604080832084518154600181018355918552938390200192909255825191519182527f0b5745354685a046e72f24602bcf00fa0ee07f0bf511afb5f2d3ab636241e41b910160405180910390a1505050505050565b600081815260016020908152604091829020600501805483518184028101840190945280845260609392830182828015610bb7576020028201919060005260206000209081546001600160a01b03168152600190910190602001808311610b995750505050509050919050565b805482106112ba57600080fd5b805481906112ca90600190611b38565b815481106112da576112da611ac5565b9060005260206000200160009054906101000a90046001600160a01b031681838154811061130a5761130a611ac5565b9060005260206000200160006101000a8154816001600160a01b0302191690836001600160a01b031602179055508080548061134857611348611b4f565b600082815260209020810160001990810180546001600160a01b03191690550190555050565b82805461137a90611afd565b90600052602060002090601f01602090048101928261139c57600085556113e2565b82601f106113b557805160ff19168380011785556113e2565b828001600101855582156113e2579182015b828111156113e25782518255916020019190600101906113c7565b506113ee929150611447565b5090565b8280548282559060005260206000209081019282156113e2579160200282015b828111156113e257825182546001600160a01b0319166001600160a01b03909116178255602090920191600190910190611412565b5b808211156113ee5760008155600101611448565b60006020828403121561146e57600080fd5b5035919050565b6000806040838503121561148857600080fd5b50508035926020909101359150565b80356001600160a01b03811681146114ae57600080fd5b919050565b600080604083850312156114c657600080fd5b6114cf83611497565b946020939093013593505050565b6000806000604084860312156114f257600080fd5b83359250602084013567ffffffffffffffff8082111561151157600080fd5b818601915086601f83011261152557600080fd5b81358181111561153457600080fd5b87602082850101111561154657600080fd5b6020830194508093505050509250925092565b6000815180845260005b8181101561157f57602081850181015186830182015201611563565b81811115611591576000602083870101525b50601f01601f19169290920160200192915050565b60006101408c83528060208401526115c08184018d611559565b604084019b909b5250506060810197909752941515608087015260a086019390935260c085019190915260e08401526001600160a01b031661010083015215156101209091015292915050565b6020808252825182820181905260009190848201906040850190845b8181101561164e5783516001600160a01b031683529284019291840191600101611629565b50909695505050505050565b60006020828403121561166c57600080fd5b61167582611497565b9392505050565b600081518084526020808501945080840160005b838110156116b55781516001600160a01b031687529582019590820190600101611690565b509495945050505050565b60006020808301818452808551808352604092508286019150828160051b87010184880160005b838110156117c957603f1989840301855281516101808151855288820151818a87015261171682870182611559565b9150508782015188860152606080830151818701525060808083015186830382880152611743838261167c565b9250505060a0808301518683038288015261175e838261167c565b9250505060c0808301516117758288018215159052565b505060e0828101519086015261010080830151908601526101208083015190860152610140808301516001600160a01b031690860152610160918201511515919094015293860193908601906001016116e7565b509098975050505050505050565b600080604083850312156117ea57600080fd5b823591506117fa60208401611497565b90509250929050565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f1916810167ffffffffffffffff8111828210171561184257611842611803565b604052919050565b600080600080600060a0868803121561186257600080fd5b8535945060208087013561ffff8116811461187c57600080fd5b9450604087013567ffffffffffffffff8082111561189957600080fd5b818901915089601f8301126118ad57600080fd5b8135818111156118bf576118bf611803565b6118d1601f8201601f19168501611819565b91508082528a848285010111156118e757600080fd5b80848401858401376000908201909301929092525094979396509394606081013594506080013592915050565b60208082526010908201526f149859999b19481a5cc818db1bdcd95960821b604082015260600190565b6001600160a01b0388811682526020820188905286811660408301528581166060830152841660808201526001600160e01b0319831660a082015260e060c0820181905260009061199190830184611559565b9998505050505050505050565b6000602082840312156119b057600080fd5b5051919050565b634e487b7160e01b600052601160045260246000fd5b60008160001904831182151516156119e7576119e76119b7565b500290565b600082198211156119ff576119ff6119b7565b500190565b6000600019821415611a1857611a186119b7565b5060010190565b60006020808385031215611a3257600080fd5b823567ffffffffffffffff80821115611a4a57600080fd5b818501915085601f830112611a5e57600080fd5b813581811115611a7057611a70611803565b8060051b9150611a81848301611819565b8181529183018401918481019088841115611a9b57600080fd5b938501935b83851015611ab957843582529385019390850190611aa0565b98975050505050505050565b634e487b7160e01b600052603260045260246000fd5b600082611af857634e487b7160e01b600052601260045260246000fd5b500690565b600181811c90821680611b1157607f821691505b60208210811415611b3257634e487b7160e01b600052602260045260246000fd5b50919050565b600082821015611b4a57611b4a6119b7565b500390565b634e487b7160e01b600052603160045260246000fdfea26469706673582212205c6f0191326b546e3ca5733b167f4d94a22a8484f2ad000e10a9177f01dd9f8564736f6c63430008090033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "close(uint256)": {
+        "details": "Called by the raffle owner when the raffle is over. This function will close the raffle to new entries and will call Airnode for randomness.send at least .001 ether to fund the sponsor wallet",
+        "params": {
+          "_raffleId": "The raffle id to close"
+        }
+      },
+      "constructor": {
+        "params": {
+          "_airnodeRrpAddress": "Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)",
+          "_sponsorWallet": "Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)"
+        }
+      },
+      "create(uint256,uint16,string,uint256,uint256)": {
+        "params": {
+          "_endTime": "Time the raffle ends",
+          "_price": "The price to enter the raffle",
+          "_startTime": "Time the raffle starts",
+          "_title": "Title of the raffle",
+          "_winnerCount": "The number of winners to be selected"
+        }
+      },
+      "enter(uint256,uint256)": {
+        "details": "To enter more than one entry, send the price * entryCount in the transaction.",
+        "params": {
+          "_raffleId": "The raffle id to enter",
+          "entryCount": "The number of entries to enter"
+        }
+      },
+      "getEntries(uint256)": {
+        "params": {
+          "_raffleId": "The raffle id to get the entries of"
+        }
+      },
+      "getWinners(uint256)": {
+        "params": {
+          "_raffleId": "The raffle id to get the winners of"
+        }
+      },
+      "pickWinners(bytes32,bytes)": {
+        "details": "Only callable by Airnode."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "close(uint256)": {
+        "notice": "Close a raffle"
+      },
+      "create(uint256,uint16,string,uint256,uint256)": {
+        "notice": "Create a new raffle"
+      },
+      "enter(uint256,uint256)": {
+        "notice": "Enter a raffle"
+      },
+      "getEntries(uint256)": {
+        "notice": "Get the raffle entries"
+      },
+      "getWinners(uint256)": {
+        "notice": "Get the raffle winners"
+      },
+      "pickWinners(bytes32,bytes)": {
+        "notice": "Randomness returned by Airnode is used to choose winners"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 2473,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "_ids",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_struct(Counter)2090_storage"
+      },
+      {
+        "astId": 2482,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "raffles",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_struct(Raffle)2534_storage)"
+      },
+      {
+        "astId": 2487,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "accountRaffles",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)"
+      },
+      {
+        "astId": 2491,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "pendingRequestIds",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_bytes32,t_bool)"
+      },
+      {
+        "astId": 2495,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "requestIdToRaffleId",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_mapping(t_bytes32,t_uint256)"
+      },
+      {
+        "astId": 2497,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "airnodeRrpAddress",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_address"
+      },
+      {
+        "astId": 2499,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "sponsor",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_address"
+      },
+      {
+        "astId": 2501,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "sponsorWallet",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_address"
+      },
+      {
+        "astId": 2504,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "ANUairnodeAddress",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_address"
+      },
+      {
+        "astId": 2507,
+        "contract": "contracts/Raffle.sol:Raffler",
+        "label": "endpointId",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_bytes32"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)dyn_storage": {
+        "base": "t_address",
+        "encoding": "dynamic_array",
+        "label": "address[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256[])",
+        "numberOfBytes": "32",
+        "value": "t_array(t_uint256)dyn_storage"
+      },
+      "t_mapping(t_bytes32,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_bytes32,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_uint256,t_struct(Raffle)2534_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct Raffler.Raffle)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Raffle)2534_storage"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(Counter)2090_storage": {
+        "encoding": "inplace",
+        "label": "struct Counters.Counter",
+        "members": [
+          {
+            "astId": 2089,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "_value",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(Raffle)2534_storage": {
+        "encoding": "inplace",
+        "label": "struct Raffler.Raffle",
+        "members": [
+          {
+            "astId": 2509,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "id",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2511,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "title",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 2513,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "price",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2515,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "winnerCount",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2518,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "winners",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_address)dyn_storage"
+          },
+          {
+            "astId": 2521,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "entries",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_array(t_address)dyn_storage"
+          },
+          {
+            "astId": 2523,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "open",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_bool"
+          },
+          {
+            "astId": 2525,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "startTime",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2527,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "endTime",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2529,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "balance",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2531,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "owner",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_address"
+          },
+          {
+            "astId": 2533,
+            "contract": "contracts/Raffle.sol:Raffler",
+            "label": "airnodeSuccess",
+            "offset": 20,
+            "slot": "10",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "352"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

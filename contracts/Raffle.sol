@@ -57,13 +57,19 @@ contract Raffler is RrpRequesterV0 {
     }
 
     /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)
-    /// @param _sponsorWallet Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)
-    constructor(address _airnodeRrpAddress, address _sponsorWallet)
+    constructor(address _airnodeRrpAddress)
         RrpRequesterV0(_airnodeRrpAddress)
     {
         airnodeRrpAddress = _airnodeRrpAddress;
-        sponsorWallet = _sponsorWallet;
         sponsor = msg.sender;
+    }
+    /// @notice set the sponsorWallet address
+    /// @param _sponsorWallet Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)
+    function setSponsorWallet(
+        address _sponsorWallet
+    ) public {
+        require(msg.sender == owner, "Sender not owner");        
+        sponsorWallet = _sponsorWallet;
     }
 
     /// @notice Create a new raffle
@@ -234,6 +240,8 @@ contract Raffler is RrpRequesterV0 {
         }
         return _raffles;
     }
+
+
 
     function removeAddress(uint256 index, address[] storage array) private {
         require(index < array.length);

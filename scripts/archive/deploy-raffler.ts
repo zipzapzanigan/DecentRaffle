@@ -4,13 +4,8 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 
-
 import { ethers } from "hardhat";
-const {
-  getSponsorWallet,
-  sponsorRequester,
-  verifyContract,
-} = require("./utils");
+import { getSponsorWallet, sponsorRequester, verifyContract } from "./utils";
 const fs = require("fs");
 const { AirnodeRrpAddresses } = require("@api3/airnode-protocol");
 
