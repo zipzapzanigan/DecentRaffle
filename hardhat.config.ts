@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
-import "@typechain/hardhat";
 import "hardhat-deploy";
+import "@nomiclabs/hardhat-ethers";
+import "@typechain/hardhat";
+// import "@nomiclabs/hardhat-etherscan";
+// import "@nomiclabs/hardhat-waffle";
 import networks from "./credentials.json";
 
 dotenv.config();
@@ -40,6 +40,9 @@ const config: HardhatUserConfig = {
     signer: {
       default: 1, // here this will by default take the second account as signer
     },
+  },
+  mocha: {
+    timeout: 100000,
   },
 };
 

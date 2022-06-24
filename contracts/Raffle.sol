@@ -194,7 +194,7 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     /// @dev Only callable by Airnode.
     function pickWinners(bytes32 requestId, bytes calldata data)
         external
-        onlyRole(RAFFLE_ADMIN)
+        onlyAirnodeRrp
     {
         require(pendingRequestIds[requestId], "No such request made");
         delete pendingRequestIds[requestId];
@@ -209,6 +209,16 @@ contract Raffler is AccessControl, RrpRequesterV0 {
         }
         raffle.airnodeSuccess = true;
         payable(raffle.owner).transfer(raffle.balance);
+    }
+
+    /// @notice Query if a raffle is open
+    /// @param _raffleId The raffle id to get the entries of
+    function getRaffleOpen(uint256 _raffleId)
+        public
+        view
+        returns (bool)
+    {
+        return raffles[_raffleId].open;
     }
 
     /// @notice Get the raffle entries
