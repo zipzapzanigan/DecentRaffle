@@ -1,5 +1,4 @@
-import { BigNumber, Contract, Event } from "ethers";
-import { AirnodeRrpAddresses } from "@api3/airnode-protocol";
+import { Contract } from "ethers";
 import { deriveSponsorWalletAddress } from "@api3/airnode-admin";
 
 const setQrngRequestParameters = async (
@@ -23,43 +22,21 @@ const setQrngRequestParameters = async (
   );
 
   // Set the parameters that will be used to make Airnode requests
-  const receipt = await qrngContract.setRequestParameters(
+  await qrngContract.setRequestParameters(
     apiData.airnode,
     apiData.endpointIdUint256,
     apiData.endpointIdUint256Array,
     sponsorWalletAddress
   );
-  console.log("Setting request parameters...");
-  await new Promise<void>((resolve) =>
-    // once(receipt.hash, () => {
-      resolve
-    // })
-  );
-  console.log("Request parameters set");
-}
-
-const createRaffle = async (
-  raffleContract: Contract,
-  ticketPrice: BigNumber,
-  raffleName: string
-) => {
-  const twoHours: number = 2 * 60 * 60;
-  // Convert float to integer
-  const now: number = Math.floor(Date.now() / 1000);
-  const receipt = await raffleContract.create(
-    ticketPrice,
-    5,
-    raffleName,
-    now - twoHours, // Workaround for setting timestamp manually because of forking
-    now + twoHours
-  );
-  const rc = await receipt.wait();
-  const [raffleId] = rc.events.find(
-    (event: Event) => event.event === "RaffleCreated"
-  ).args;
-  return raffleContract.raffles(raffleId);
+  // console.log("Setting request parameters...");
+  // await new Promise<void>((resolve) =>
+  //   // once(receipt.hash, () => {
+  //     resolve
+  //   // })
+  // );
+  // console.log("Request parameters set");
 };
 
-export { createRaffle, setQrngRequestParameters };
+export { setQrngRequestParameters };
 
-export default () => { };
+export default () => {};

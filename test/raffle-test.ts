@@ -1,13 +1,9 @@
-import { BigNumber, Contract, Event, Signer, ContractFactory } from "ethers";
+import { Contract, ContractFactory } from "ethers";
 import { expect } from "chai";
 import { ethers, deployments } from "hardhat";
-import { createRaffle } from "../scripts/raffle-tools";
+import { createRaffle } from "../scripts/create_raffle";
 import { encode } from "@api3/airnode-abi";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { AirnodeRrpAddresses } from "@api3/airnode-protocol";
-import getDeployedContract from "../deploy/1_deploy";
-import { fail } from "assert";
-const nullfunc = async () => { };
 
 describe("Raffle", function () {
   const sponsorWallet = "0x8844CEF45EA0D410948B2c01753aAae8f86d0842";
@@ -102,22 +98,21 @@ describe("Raffle", function () {
     console.log("owner address", await owner.getAddress());
     chainId = await ethers.provider.getNetwork().then((n) => n.chainId);
     // raffleContract = await getDeployedContract();
-
-    const raffleDeployment = await deployments.fixture("deploy");
+    const RaffleDeployment = await deployments.get("Raffler");
     raffleContract = new ethers.Contract(
-      raffleDeployment.deploy.address,
-      raffleDeployment.deploy.abi,
+      RaffleDeployment.address,
+      RaffleDeployment.abi,
       owner
     );
   });
 
-  // it("Creates a raffle", createRaffleTest);
+  it("Creates a raffle", createRaffleTest);
   // it.skip("Create role can create new Raffle", nullfunc);
   // it.skip("Non create role cannot create new Raffle", nullfunc);
   // it.skip("Anyone can enter the raffle for a fee", nullfunc);
   // it.skip("Create role can pick a winner", nullfunc);
   // it.skip("Non create role cannot create new Raffle", nullfunc);
-  // it("Enters raffle", enterRaffleTest);
+  it("Enters raffle", enterRaffleTest);
   it("Pick Winner", pickWinnerTest);
   // it.skip("Make Params", makeParamsTest);
 });

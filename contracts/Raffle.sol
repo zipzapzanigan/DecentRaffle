@@ -10,12 +10,16 @@
 /// @notice This contract is not secure. Do not use it in production. Refer to
 /// the contract for more information.
 /// @dev See README.md for more information.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "./QRNG.sol";
 
-contract Raffler is RrpRequesterV0 {
+contract Raffler is AccessControl, RrpRequesterV0 {
+    bytes32 public constant RAFFLE_ADMIN = keccak256("RAFFLE_ADMIN");
+
     using Counters for Counters.Counter;
     Counters.Counter private _ids;
 
@@ -33,6 +37,7 @@ contract Raffler is RrpRequesterV0 {
     // Since it is impossible to ensure that a particular Airnode will be
     // indefinitely available, you are recommended to always implement a way
     // to update these parameters.
+    address public airnode;
     address public airnodeRrpAddress;
     address public sponsor;
     address public sponsorWallet;
@@ -57,19 +62,29 @@ contract Raffler is RrpRequesterV0 {
     }
 
     /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)
-    constructor(address _airnodeRrpAddress)
-        RrpRequesterV0(_airnodeRrpAddress)
-    {
+    constructor(address _airnodeRrpAddress) RrpRequesterV0(_airnodeRrpAddress) {
         airnodeRrpAddress = _airnodeRrpAddress;
         sponsor = msg.sender;
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(RAFFLE_ADMIN, msg.sender);
     }
+
     /// @notice set the sponsorWallet address
     /// @param _sponsorWallet Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)
-    function setSponsorWallet(
-        address _sponsorWallet
-    ) public {
-        require(msg.sender == owner, "Sender not owner");        
+    function setSponsorWallet(address _sponsorWallet)
+        public
+        onlyRole(RAFFLE_ADMIN)
+    {
         sponsorWallet = _sponsorWallet;
+    }
+
+    /// @notice set the airnodeRrp address
+    /// @param _airnodeRrpAddress Sponsor Wallet address (https://docs.api3.org/airnode/v0.6/concepts/sponsor.html#derive-a-sponsor-wallet)
+    function setAirnodeRrpAddress(address _airnodeRrpAddress)
+        public
+        onlyRole(RAFFLE_ADMIN)
+    {
+        airnodeRrpAddress = _airnodeRrpAddress;
     }
 
     /// @notice Create a new raffle
@@ -84,7 +99,7 @@ contract Raffler is RrpRequesterV0 {
         string memory _title,
         uint256 _startTime,
         uint256 _endTime
-    ) public {
+    ) public onlyRole(RAFFLE_ADMIN) {
         require(_winnerCount > 0, "Winner count must be greater than 0");
         _ids.increment();
         Raffle memory raffle = Raffle(
@@ -136,7 +151,7 @@ contract Raffler is RrpRequesterV0 {
     /// call Airnode for randomness.
     /// @dev send at least .001 ether to fund the sponsor wallet
     /// @param _raffleId The raffle id to close
-    function close(uint256 _raffleId) public payable {
+    function close(uint256 _raffleId) public payable onlyRole(RAFFLE_ADMIN) {
         Raffle storage raffle = raffles[_raffleId];
         require(
             msg.sender == raffle.owner,
@@ -159,7 +174,7 @@ contract Raffler is RrpRequesterV0 {
             "Please send some funds to the sponsor wallet"
         );
         payable(sponsorWallet).transfer(msg.value);
-
+        // send off request to airnode for random number
         bytes32 requestId = airnodeRrp.makeFullRequest(
             ANUairnodeAddress,
             endpointId,
@@ -171,6 +186,7 @@ contract Raffler is RrpRequesterV0 {
         );
         pendingRequestIds[requestId] = true;
         requestIdToRaffleId[requestId] = _raffleId;
+        // close raffle and wait for pending request IDs to be fulfilled
         raffle.open = false;
     }
 
@@ -178,7 +194,7 @@ contract Raffler is RrpRequesterV0 {
     /// @dev Only callable by Airnode.
     function pickWinners(bytes32 requestId, bytes calldata data)
         external
-        onlyAirnodeRrp
+        onlyRole(RAFFLE_ADMIN)
     {
         require(pendingRequestIds[requestId], "No such request made");
         delete pendingRequestIds[requestId];
@@ -240,8 +256,6 @@ contract Raffler is RrpRequesterV0 {
         }
         return _raffles;
     }
-
-
 
     function removeAddress(uint256 index, address[] storage array) private {
         require(index < array.length);

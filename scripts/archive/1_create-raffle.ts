@@ -9,7 +9,7 @@ import { ethers } from "hardhat";
 // eslint-disable-next-line node/no-missing-import
 import { getRaffleContract } from "./utils";
 // eslint-disable-next-line node/no-missing-import
-import { createRaffle } from "./raffle-tools";
+import { createRaffle } from "../raffle-tools";
 
 async function main() {
   const raffleContract: Contract = await getRaffleContract();
