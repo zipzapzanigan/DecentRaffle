@@ -16,6 +16,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "./IClaimNFT.sol";
 
 contract Raffler is AccessControl, RrpRequesterV0 {
     bytes32 public constant RAFFLE_ADMIN = keccak256("RAFFLE_ADMIN");
@@ -27,6 +28,7 @@ contract Raffler is AccessControl, RrpRequesterV0 {
 
     mapping(uint256 => Raffle) public raffles;
     mapping(address => uint256[]) public accountRaffles;
+    mapping(address => uint256[]) public raffleClaims;
 
     // To store pending Airnode requests
     mapping(bytes32 => bool) public pendingRequestIds;
@@ -41,8 +43,7 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     address public airnodeRrpAddress;
     address public sponsor;
     address public sponsorWallet;
-    address public NFTClaimerContractAddress = 
-        0x9d3C147cA16DB954873A498e0af5852AB39139f2;
+    address public nftContract;
     address public ANUairnodeAddress =
         0x9d3C147cA16DB954873A498e0af5852AB39139f2;
     bytes32 public endpointId =
@@ -64,8 +65,10 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     }
 
     /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)
-    constructor(address _airnodeRrpAddress) RrpRequesterV0(_airnodeRrpAddress) {
+    /// @param _nftContract NFT contract that is used to generate tokens that allow users to claim raffle tickets
+    constructor(address _airnodeRrpAddress, address _nftContract) RrpRequesterV0(_airnodeRrpAddress) {
         airnodeRrpAddress = _airnodeRrpAddress;
+        nftContract = _nftContract;
         sponsor = msg.sender;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(RAFFLE_ADMIN, msg.sender);
@@ -104,20 +107,20 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     ) public onlyRole(RAFFLE_ADMIN) {
         require(_winnerCount > 0, "Winner count must be greater than 0");
         _ids.increment();
-        Raffle memory raffle = Raffle(
-            _ids.current(),
-            _title,
-            _price,
-            _winnerCount,
-            new address[](0),
-            new address[](0),
-            true,
-            _startTime,
-            _endTime,
-            0,
-            msg.sender,
-            false
-        );
+        Raffle memory raffle = Raffle({
+            id: _ids.current(),
+            title:  _title,
+            price:  _price,
+            winnerCount:    _winnerCount,
+            winners:    new address[](0),
+            entries:    new address[](0),
+            open:   true,
+            startTime:  _startTime,
+            endTime:    _endTime,
+            balance:    0,
+            owner:  msg.sender,
+            airnodeSuccess: false
+            });
         raffles[raffle.id] = raffle;
         accountRaffles[msg.sender].push(raffle.id);
         emit RaffleCreated(raffle.id);
@@ -150,8 +153,11 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     /// @notice Claim raffle entries for NFTs you hold
     /// @param _raffleId The raffle id to enter
     function claim(uint256 _raffleId) public payable {
-        uint256 nftCount = IERC721(NFTClaimerContractAddress).balanceOf(msg.sender);
+        uint256 nftCount = IClaimNFT(nftContract).getLevelsBalance(msg.sender);
         Raffle storage raffle = raffles[_raffleId];
+        for (uint n = 0; n < raffleClaims[msg.sender].length; n++){
+            require(raffleClaims[msg.sender][n]!= _raffleId, "Address has already claimed tickets for this raffle");
+        }
         require(raffle.open, "Raffle is closed");
         require(
             block.timestamp >= raffle.startTime &&

@@ -6,7 +6,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import * as airnodeAdmin from "@api3/airnode-admin";
 import apis from "../data/apis.json";
 
-export const deploy: DeployFunction = async (
+export const deployRaffle: DeployFunction = async (
   hre: HardhatRuntimeEnvironment
 ) => {
   const chainId = parseInt(await getChainId());
@@ -80,5 +80,5 @@ export const deploy: DeployFunction = async (
   }
 };
 
-module.exports = deploy;
-module.exports.tags = ["deploy"];
+module.exports = deployRaffle;
+module.exports.tags = ["raffle"];
