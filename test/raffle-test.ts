@@ -1,7 +1,7 @@
 import { ethers, deployments } from "hardhat";
 import { Contract, Signer } from "ethers";
 import { expect } from "chai";
-import { createRaffle } from "../scripts/create_raffle";
+import { createRaffle } from "./create_raffle";
 import { Deployment } from "hardhat-deploy/dist/types";
 const RAFFLE_ADMIN = ethers.utils.keccak256(
   ethers.utils.toUtf8Bytes("RAFFLE_ADMIN")
@@ -14,6 +14,7 @@ describe("Testing Deployed Raffle Contract", () => {
   let RaffleDeployment: Deployment;
   let deployer: Signer;
   let accounts: Signer[];
+  const winnerCount = 3;
 
   before("resetting contract interface", async () => {
     [deployer, ...accounts] = await ethers.getSigners();
@@ -84,7 +85,8 @@ describe("Testing Deployed Raffle Contract", () => {
       await createRaffle(
         unauthorizedRaffleContract,
         ticketPrice,
-        "unauthorized raffle"
+        "unauthorized raffle",
+        winnerCount
       );
     } catch (result: any) {
       const errorstring = result.error.toString();
@@ -102,7 +104,8 @@ describe("Testing Deployed Raffle Contract", () => {
     const raffle = await createRaffle(
       raffleContract,
       ticketPrice,
-      "test raffle"
+      "test raffle",
+      winnerCount
     );
     expect(raffle.id.toNumber()).to.equal(initialRaffleCount + 1);
     expect(await raffleContract.getRaffleOpen(raffle.id)).to.equal(true);

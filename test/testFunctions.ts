@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { BigNumber, Contract, Signer } from "ethers";
 import { expect } from "chai";
-import { createRaffle } from "../scripts/create_raffle";
+import { createRaffle } from "./create_raffle";
 
 export const testCreateRaffle = async (
   signer: Signer,

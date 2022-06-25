@@ -3,14 +3,15 @@ import { BigNumber, Contract, Event } from "ethers";
 export const createRaffle = async (
   raffleContract: Contract,
   ticketPrice: BigNumber,
-  raffleName: string
+  raffleName: string,
+  winnerCount: number
 ) => {
   const twoHours: number = 2 * 60 * 60;
   // Convert float to integer
   const now: number = Math.floor(Date.now() / 1000);
   const receipt = await raffleContract.create(
     ticketPrice,
-    5,
+    winnerCount,
     raffleName,
     now - twoHours, // Workaround for setting timestamp manually because of forking
     now + twoHours
