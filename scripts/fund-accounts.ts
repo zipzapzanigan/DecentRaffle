@@ -5,10 +5,14 @@ const valueinether = "0.0025";
 const fundAccounts = async (valueinether: string) => {
   // let owner: Signer;
   // let accounts: Signer[];
-  const [owner, ...accounts] = await ethers.getSigners();
+  const [deployer, ...accounts] = await ethers.getSigners();
   const valueinwei = ethers.utils.parseUnits(valueinether, "ether");
+  const deployerbalance = await ethers.provider.getBalance(
+    await deployer.getAddress()
+  );
+  console.log("deployer balance: ", ethers.utils.formatEther(deployerbalance));
 
-  console.log("sending funds to accounts that have less than the threshold")
+  console.log("sending funds to accounts that have less than the threshold");
 
   for (let i = 0; i < accounts.length; i++) {
     const balance = await ethers.provider.getBalance(
@@ -21,7 +25,7 @@ const fundAccounts = async (valueinether: string) => {
         value: valueinwei,
       };
       console.log(params);
-      const txHash = await owner.sendTransaction(params);
+      const txHash = await deployer.sendTransaction(params);
     }
     console.log(
       await accounts[i].getAddress(),

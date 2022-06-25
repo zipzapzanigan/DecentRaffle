@@ -1,26 +1,103 @@
 import { ethers, deployments } from "hardhat";
-import { Contract, ContractFactory, Signer, BigNumber } from "ethers";
+import { Contract, Signer } from "ethers";
 import { expect } from "chai";
 import { createRaffle } from "../scripts/create_raffle";
-import { encode } from "@api3/airnode-abi";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-
-describe("Raffle", function () {
-  const sponsorWallet = "0x8844CEF45EA0D410948B2c01753aAae8f86d0842";
+import { Deployment } from "hardhat-deploy/dist/types";
+const RAFFLE_ADMIN = ethers.utils.keccak256(
+  ethers.utils.toUtf8Bytes("RAFFLE_ADMIN")
+);
+const DEFAULT_ADMIN_ROLE =
+  "0x0000000000000000000000000000000000000000000000000000000000000000";
+describe("Testing Deployed Raffle Contract", () => {
   const ticketPrice = ethers.utils.parseEther(".00001");
-  const deployedAddress: string = "0xE841729307C6F5140e9Bc7f30FE97DfC30443dB0";
   let raffleContract: Contract;
-  // eslint-disable-next-line camelcase
-  let RaffleContract: ContractFactory;
-  let chainId: number;
-  let owner: SignerWithAddress;
-  let accounts: SignerWithAddress[];
-  let raffleId: number = 12;
+  let RaffleDeployment: Deployment;
+  let deployer: Signer;
+  let accounts: Signer[];
 
-  const testCreateRaffle = async () => {
+  before("resetting contract interface", async () => {
+    [deployer, ...accounts] = await ethers.getSigners();
+    RaffleDeployment = await deployments.get("Raffler");
+    raffleContract = new ethers.Contract(
+      RaffleDeployment.address,
+      RaffleDeployment.abi,
+      deployer
+    );
+  });
+
+  it("Deploying address should have all roles by default", async function () {
+    const deployerAddress = await deployer.getAddress();
+    expect(
+      await raffleContract.hasRole(RAFFLE_ADMIN, deployerAddress)
+    ).to.equal(true);
+    expect(
+      await raffleContract.hasRole(DEFAULT_ADMIN_ROLE, deployerAddress)
+    ).to.equal(true);
+  });
+
+  it("Other addresses should not have any roles by default", async function () {
+    for (const account of accounts) {
+      const address = await account.getAddress();
+      expect(await raffleContract.hasRole(RAFFLE_ADMIN, address)).to.equal(
+        false
+      );
+      expect(
+        await raffleContract.hasRole(DEFAULT_ADMIN_ROLE, address)
+      ).to.equal(false);
+    }
+  });
+
+  it("Deployer can grant and revoke roles", async () => {
+    // granting and revoking roles sometimes needs extra time to complete if the network is slow
+    const address = await accounts[1].getAddress();
+    let result = true;
+    while (result) {
+      await raffleContract.revokeRole(RAFFLE_ADMIN, address);
+      // await new Promise((resolve) => setTimeout(resolve, 100));
+      result = await raffleContract.hasRole(RAFFLE_ADMIN, address);
+    }
+    expect(result).to.equal(false);
+    console.log("\trole RAFFLE_ADMIN revoked", result);
+    await raffleContract.grantRole(RAFFLE_ADMIN, address);
+    while (!result) {
+      result = await raffleContract.hasRole(RAFFLE_ADMIN, address);
+      // await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    console.log("\trole RAFFLE_ADMIN granted", result);
+    expect(result).to.equal(true);
+    await raffleContract.revokeRole(RAFFLE_ADMIN, address);
+    while (result) {
+      result = await raffleContract.hasRole(RAFFLE_ADMIN, address);
+      // await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    console.log("\trole RAFFLE_ADMIN revoked", result);
+    expect(result).to.equal(false);
+  });
+
+  it("Non authorized accounts cannot create a new raffle", async () => {
+    const unauthorizedRaffleContract = new ethers.Contract(
+      RaffleDeployment.address,
+      RaffleDeployment.abi,
+      accounts[2]
+    );
+    try {
+      await createRaffle(
+        unauthorizedRaffleContract,
+        ticketPrice,
+        "unauthorized raffle"
+      );
+    } catch (result: any) {
+      const errorstring = result.error.toString();
+      expect(
+        errorstring.startsWith("ProviderError: execution reverted:")
+      ).to.equal(true);
+    }
+  });
+
+  it("Deployer is authorized to create a new raffle with correct id", async () => {
     // check if raffle id is 1 more after creating raffle compared to before
     const initialRaffleCount = (
-      await raffleContract.getAccountRaffles(owner.getAddress())
+      await raffleContract.getAccountRaffles(deployer.getAddress())
     ).length;
     const raffle = await createRaffle(
       raffleContract,
@@ -28,34 +105,60 @@ describe("Raffle", function () {
       "test raffle"
     );
     expect(raffle.id.toNumber()).to.equal(initialRaffleCount + 1);
-  };
+    expect(await raffleContract.getRaffleOpen(raffle.id)).to.equal(true);
+  });
 
-  const testEnterRaffle = async () => {
+  it("Can enter raffle 3 times each with 10 accounts", async () => {
+    const [deployer, ...accounts] = await ethers.getSigners();
     const raffles = await raffleContract.getAccountRaffles(
-      await owner.getAddress()
+      await deployer.getAddress()
     );
     const raffle = raffles[raffles.length - 1]; // get the ID of the last raffle
     const ticketCount = 3;
     const accountCount = 10;
     await Promise.all(
       accounts.slice(0, accountCount).map(async (account) => {
-        const rafflecontract = await raffleContract
+        const tx = await raffleContract
           .connect(account)
           .enter(raffle.id, ticketCount, {
             value: ticketPrice.mul(ticketCount),
           });
-        return rafflecontract.wait();
+        return tx.wait();
       })
-    ).then(async (results) => {
+    ).then(async () => {
       // console.log(results);
       const entries = await raffleContract.getEntries(raffle.id);
       expect(entries.length).to.equal(ticketCount * accountCount);
     });
-  };
+  });
 
-  const testCloseRaffle = async () => {
+  it("Unauthorized accounts cannot close the last raffle", async () => {
+    const unauthorizedRaffleContract = new ethers.Contract(
+      RaffleDeployment.address,
+      RaffleDeployment.abi,
+      accounts[2]
+    );
+    const raffles = await unauthorizedRaffleContract.getAccountRaffles(
+      await deployer.getAddress()
+    );
+    const raffle = raffles[raffles.length - 1]; // get the last raffle
+
+    // expect(await raffleContract.getRaffleOpen(raffle.id)).to.equal(true);
+    try {
+      const tx = await unauthorizedRaffleContract.close(raffle.id, {
+        value: ethers.utils.parseEther(".001"),
+      });
+      await tx.wait();
+    } catch (result: any) {
+      expect(
+        result.error.toString().startsWith("ProviderError: execution reverted")
+      ).to.equal(true);
+    }
+  });
+
+  it("Authorized accounts can close the last raffle", async () => {
     const raffles = await raffleContract.getAccountRaffles(
-      await owner.getAddress()
+      await deployer.getAddress()
     );
     const raffle = raffles[raffles.length - 1]; // get the last raffle
 
@@ -65,57 +168,23 @@ describe("Raffle", function () {
     });
     await tx.wait();
     expect(await raffleContract.getRaffleOpen(raffle.id)).to.equal(false);
-  };
+  });
 
-  const testGetWinners = async () => {
-    let raffles = await raffleContract.getAccountRaffles(owner.getAddress());
+  it("Anyone can check the winners", async () => {
+    let raffles = await raffleContract.getAccountRaffles(deployer.getAddress());
     let raffle = raffles[raffles.length - 1]; // get the last raffle
-    // const randomNumbers = [];
-    // for (let i = 0; i < 5; i++) {
-    //   randomNumbers.push(Math.floor(Math.random() * 99999));
-    // }
-    // console.log(randomNumbers);
-
-    var airnodeReplied = false;
-    console.log("\twaiting for airnode to reply");
+    let airnodeReplied = false;
+    console.log("\tawaiting airnode reply (may take up to 90s)");
 
     while (!airnodeReplied) {
-      raffles = await raffleContract.getAccountRaffles(owner.getAddress());
+      raffles = await raffleContract.getAccountRaffles(deployer.getAddress());
       raffle = raffles[raffles.length - 1]; // get the last raffle
       airnodeReplied = await raffle.airnodeSuccess;
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     const winners = await raffleContract.getWinners(raffle.id);
-    console.log(raffle);
     console.log(winners);
-    // console.log(winners.length);
     expect(winners.length).to.equal(5);
-  };
-
-  before("deploying contract", async () => {
-    // if we want to deploy the raffle contract once for multiple tests,
-    // we can set deployedAddress, so it will reuse the deployment
-    [owner, ...accounts] = await ethers.getSigners();
-    console.log("owner address", await owner.getAddress());
-    chainId = await ethers.provider.getNetwork().then((n) => n.chainId);
-    // raffleContract = await getDeployedContract();
-    const RaffleDeployment = await deployments.get("Raffler");
-    raffleContract = new ethers.Contract(
-      RaffleDeployment.address,
-      RaffleDeployment.abi,
-      owner
-    );
   });
-
-  it("Can create a new raffle with correct id", testCreateRaffle);
-  it("Can enter raffle 3 times each with 10 accounts", testEnterRaffle);
-  it("Can close the last raffle", testCloseRaffle);
-  it("Can read the winners - takes a minute to return", testGetWinners);
-  // it.skip("Create role can create new Raffle", nullfunc);
-  // it.skip("Non create role cannot create new Raffle", nullfunc);
-  // it.skip("Anyone can enter the raffle for a fee", nullfunc);
-  // it.skip("Create role can pick a winner", nullfunc);
-  // it.skip("Non create role cannot create new Raffle", nullfunc);
-  // it.skip("Make Params", makeParamsTest);
 });
