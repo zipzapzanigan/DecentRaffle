@@ -25,7 +25,7 @@ const fundAccounts = async (valueinether: string) => {
         value: valueinwei,
       };
       console.log(params);
-      const txHash = await deployer.sendTransaction(params);
+      await deployer.sendTransaction(params);
     }
     console.log(
       await accounts[i].getAddress(),

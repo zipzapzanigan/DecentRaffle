@@ -3,6 +3,7 @@ node_modules
 coverage
 coverage.json
 typechain
+deployments
 
 #Hardhat files
 cache
@@ -12,4 +13,5 @@ dist
 
 credentials.json
 yarn.lock
+yarn-error.log
 package-lock.json
