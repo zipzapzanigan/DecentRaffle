@@ -15,7 +15,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./QRNG.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract Raffler is AccessControl, RrpRequesterV0 {
     bytes32 public constant RAFFLE_ADMIN = keccak256("RAFFLE_ADMIN");
@@ -41,6 +41,8 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     address public airnodeRrpAddress;
     address public sponsor;
     address public sponsorWallet;
+    address public NFTClaimerContractAddress = 
+        0x9d3C147cA16DB954873A498e0af5852AB39139f2;
     address public ANUairnodeAddress =
         0x9d3C147cA16DB954873A498e0af5852AB39139f2;
     bytes32 public endpointId =
@@ -144,6 +146,25 @@ contract Raffler is AccessControl, RrpRequesterV0 {
             raffle.entries.push(msg.sender);
         }
     }
+
+    /// @notice Claim raffle entries for NFTs you hold
+    /// @param _raffleId The raffle id to enter
+    function claim(uint256 _raffleId) public payable {
+        uint256 nftCount = IERC721(NFTClaimerContractAddress).balanceOf(msg.sender);
+        Raffle storage raffle = raffles[_raffleId];
+        require(raffle.open, "Raffle is closed");
+        require(
+            block.timestamp >= raffle.startTime &&
+                block.timestamp <= raffle.endTime,
+            "Raffle is closed"
+        );
+        require(nftCount >= 1, "Entry count must be at least 1");
+        raffle.balance += nftCount;
+        for (uint256 i = 0; i < nftCount; i++) {
+            raffle.entries.push(msg.sender);
+        }
+    }
+
 
     /// @notice Close a raffle
     /// @dev Called by the raffle owner when the raffle is over.

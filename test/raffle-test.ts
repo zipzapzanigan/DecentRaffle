@@ -14,7 +14,7 @@ describe("Testing Deployed Raffle Contract", () => {
   let RaffleDeployment: Deployment;
   let deployer: Signer;
   let accounts: Signer[];
-  const winnerCount = 3;
+  const winnerCount = 1;
 
   before("resetting contract interface", async () => {
     [deployer, ...accounts] = await ethers.getSigners();
@@ -188,6 +188,6 @@ describe("Testing Deployed Raffle Contract", () => {
 
     const winners = await raffleContract.getWinners(raffle.id);
     console.log(winners);
-    expect(winners.length).to.equal(5);
+    expect(winners.length).to.equal(winnerCount);
   });
 });
