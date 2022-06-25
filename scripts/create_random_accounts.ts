@@ -24,7 +24,7 @@ const limit = pRateLimit({
   interval: 1000, // 1000 ms == 1 second
   rate: 12, // 30 API calls per interval
   concurrency: 12, // no more than 10 running at once
-  // maxDelay: 10000              // an API call delayed > 2 sec is rejected
+  // maxDelay: 10000  // an API call delayed > 2 sec is rejected
 });
 
 const main = async () => {
