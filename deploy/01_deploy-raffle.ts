@@ -1,5 +1,8 @@
 import { ethers, getChainId, deployments } from "hardhat";
-import { AirnodeRrpAddresses, AirnodeRrpV0Factory } from "@api3/airnode-protocol";
+import {
+  AirnodeRrpAddresses,
+  AirnodeRrpV0Factory,
+} from "@api3/airnode-protocol";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 // eslint-disable-next-line node/no-unpublished-import
@@ -11,11 +14,11 @@ export const deployRaffle: DeployFunction = async (
 ) => {
   const chainId = parseInt(await getChainId());
   const [deployer] = await ethers.getSigners();
-
+  const allDeployments = await deployments.all();
   await deployments
     .deploy("Raffler", {
       from: await deployer.getAddress(),
-      args: [AirnodeRrpAddresses[chainId]],
+      args: [AirnodeRrpAddresses[chainId], allDeployments.ClaimNFT.address],
       skipIfAlreadyDeployed: true,
       log: true,
     })
@@ -81,4 +84,4 @@ export const deployRaffle: DeployFunction = async (
 };
 
 module.exports = deployRaffle;
-module.exports.tags = ["raffle"];
+module.exports.tags = ["raffler"];

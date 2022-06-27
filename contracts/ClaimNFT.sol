@@ -6,15 +6,12 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./Raffle.sol";
+import "./Raffler.sol";
 
 contract ClaimNFT is ERC721, ERC721Burnable, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
-
-    Raffler private raffler;
-    uint256 public raffleId;
 
     // each token has its own level, which changes the number of raffle tickets they can claim
     uint256 public constant maxLevel = 5;
@@ -24,13 +21,8 @@ contract ClaimNFT is ERC721, ERC721Burnable, Ownable {
     mapping(uint256 => uint256) _tokenLevels;
     mapping(address => uint256) _levelBalances;
 
-    constructor(address _rafflerContract, uint256 _raffleId)
-        ERC721("ClaimNFT", "CLM")
-    {
-        raffler = Raffler(_rafflerContract);
-        raffleId = _raffleId;
-    }
-    
+    constructor() ERC721("ClaimNFT", "CLM") {}
+
     /**
      * @dev Return the balance of levels from all NFTs that the owner holds
      */
@@ -73,4 +65,19 @@ contract ClaimNFT is ERC721, ERC721Burnable, Ownable {
         safeTransferFrom(from, to, tokenId, "");
     }
 
+    /**
+     * @dev Burns `tokenId`. See {ERC721-_burn}.
+     * - subtracts level balance from token owners total level balance
+     * - The caller must own `tokenId` or be an approved operator.
+     */
+    function burn(uint256 tokenId) public virtual override {
+        require(
+            _isApprovedOrOwner(_msgSender(), tokenId),
+            "ERC721Burnable: caller is not owner nor approved"
+        );
+        for (uint8 i = 0; i < _tokenLevels[tokenId]; i++) {
+            _levelBalances[msg.sender] -= levelWeights[i];
+        }
+        _burn(tokenId);
+    }
 }

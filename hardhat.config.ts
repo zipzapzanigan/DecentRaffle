@@ -31,7 +31,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "rinkeby",
+  defaultNetwork: "mumbai",
   networks: networks,
   namedAccounts: {
     deployer: {

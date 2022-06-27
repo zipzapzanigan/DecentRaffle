@@ -43,7 +43,7 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     address public airnodeRrpAddress;
     address public sponsor;
     address public sponsorWallet;
-    address public nftContract;
+    address public claimNftContract;
     address public ANUairnodeAddress =
         0x9d3C147cA16DB954873A498e0af5852AB39139f2;
     bytes32 public endpointId =
@@ -65,10 +65,10 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     }
 
     /// @param _airnodeRrpAddress Airnode RRP contract address (https://docs.api3.org/airnode/v0.6/reference/airnode-addresses.html)
-    /// @param _nftContract NFT contract that is used to generate tokens that allow users to claim raffle tickets
-    constructor(address _airnodeRrpAddress, address _nftContract) RrpRequesterV0(_airnodeRrpAddress) {
+    /// @param _claimNftContract NFT contract that is used to generate tokens that allow users to claim raffle tickets
+    constructor(address _airnodeRrpAddress, address _claimNftContract) RrpRequesterV0(_airnodeRrpAddress) {
         airnodeRrpAddress = _airnodeRrpAddress;
-        nftContract = _nftContract;
+        claimNftContract = _claimNftContract;
         sponsor = msg.sender;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(RAFFLE_ADMIN, msg.sender);
@@ -153,7 +153,7 @@ contract Raffler is AccessControl, RrpRequesterV0 {
     /// @notice Claim raffle entries for NFTs you hold
     /// @param _raffleId The raffle id to enter
     function claim(uint256 _raffleId) public payable {
-        uint256 nftCount = IClaimNFT(nftContract).getLevelsBalance(msg.sender);
+        uint256 nftCount = IClaimNFT(claimNftContract).getLevelsBalance(msg.sender);
         Raffle storage raffle = raffles[_raffleId];
         for (uint n = 0; n < raffleClaims[msg.sender].length; n++){
             require(raffleClaims[msg.sender][n]!= _raffleId, "Address has already claimed tickets for this raffle");
